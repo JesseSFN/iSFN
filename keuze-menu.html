@@ -20,14 +20,19 @@
     }
 
     .logo {
-      width: 220px;
+      width: 350px;
       height: auto;
       margin-bottom: 40px;
       user-select: none;
     }
 
-    .explo-button {
-      background-color: #922B3E;
+    .button-container {
+      display: flex;           /* Knoppen naast elkaar */
+      gap: 20px;               /* Ruimte tussen knoppen */
+      justify-content: center; /* Horizontaal centreren */
+    }
+
+    .explo-button, .welp-button {
       color: white;
       border: none;
       border-radius: 12px;
@@ -38,49 +43,41 @@
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
       transition: all 0.3s ease;
     }
-    
 
-    .welp-button:hover {
+    .explo-button {
+      background-color: #922B3E;
+    }
+
+    .explo-button:hover {
       background-color: #6b1f2d;
       transform: scale(1.05);
     }
+
     .welp-button {
       background-color: #317F43;
-      color: white;
-      border: none;
-      border-radius: 12px;
-      padding: 15px 40px;
-      font-size: 22px;
-      font-weight: 600;
-      cursor: pointer;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      transition: all 0.3s ease;
     }
-    
 
     .welp-button:hover {
       background-color: #266134;
       transform: scale(1.05);
     }
 
-
   </style>
 </head>
 <body>
- <!-- Logo -->
-<img src="Images/iSFN_logo.png" alt="iScout Logo" class="logo" style="width:350px; height:auto;" />
 
-<!-- Explorers Knop -->
-<button class="explo-button" onclick="window.location.href='game.html'">
-  Explorers
-</button>
+  <!-- Logo -->
+  <img src="Images/iSFN_logo.png" alt="iScout Logo" class="logo" />
 
-<!-- Welpen Knop -->
-<button class="explo-button" onclick="window.location.href='game.html'">
-  Welpen
-</button>
+  <!-- Knoppen naast elkaar -->
+  <div class="button-container">
+    <button class="explo-button" onclick="window.location.href='game.html'">
+      Explorers
+    </button>
+    <button class="welp-button" onclick="window.location.href='game.html'">
+      Welpen
+    </button>
+  </div>
 
-  
 </body>
 </html>
-
