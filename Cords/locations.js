@@ -1,0 +1,187 @@
+export const locations = [
+{
+        name: "De bekende schrijver",
+        hint: "Een bekende schrijver overleefde een vliegtuigcrash, vocht in een oorlog, en schreef later over een oude man en een vis. In welke stad werd hij geboren?",
+        lat: 41.8878145,
+        lng: -87.7887615,
+        radius: 4
+      },
+      {
+        name: "Leeuwen standbeeld",
+        hint: "Een beroemd standbeeld in Azië lijkt op een leeuw die water spuwt. Het lichaam is echter geen leeuw. Ga naar het standbeeld",
+        lat: 1.2867841,
+        lng: 103.8545035,
+        radius: 0.2
+      },
+      {
+        name: "Beetje nat",
+        hint: "Als je zout bij je friet wilt hebben, zou ik dit stukje water pakken.",
+        lat: 31.5414738,
+        lng: 35.4787059,
+        radius: 50
+      },
+      {
+        name: "Rivieren race",
+        hint: "Dit rivieren onderling houden een wedstrijd wie de meeste landen ziet, we gaan naar de oorsprong van de winnaar",
+        lat: 47.95183609837859,
+        lng: 8.502578049847092,
+        radius: 0.02
+      },
+      {
+        name: "Wat zeg je?",
+        hint: "Je kan fluisteren wat je wilt, maar iedereen hoort je in dit gebouw brits praten.",
+        lat: 51.51383972167969,
+        lng: -0.0982590988278389,
+        radius: 30
+      },
+      {
+        name: "Macro foto?",
+        hint: "Deze incecten hebben op de foto gestaan toen ze de wereld verranderde",
+        lat: 51.53208474855893,
+        lng: -0.17734928191069477,
+        radius: 0.005
+      },
+      {
+        name: "Computerpraat",
+        hint: "01000111 01100001 00100000 01101110 01100001 01100001 01110010 00100000 01101000 01100101 01110100 00100000 01101111 01110000 01100101 01110010 01100001 00101101 01101000 01110101 01101001 01110011 00100000 01101001 01101110 00100000 01010011 01111001 01100100 01101110 01100101 01111001",
+        lat: -33.857276182038945,
+        lng: 151.21494997329745,
+        radius: 0.02
+      },
+      {
+        name: "Cgz hkzkqktz joz?",
+        hint: "Een romeinse leider en iets wat Thom nooit zal eten in zijn leven. Het cijfer 6 is belangrijk",
+        lat: 10.91882052026577,
+        lng: 139.96362647573747,
+        radius: 400
+      },
+      {
+        name: "Niet de Gamecube maar de?",
+        hint: "Nintendo heeft hier een console van: V2UgZ2FhbiBuYWFyIFNjb3V0aW5nIHRvZQ==",
+        lat: 51.529314741564455,
+        lng: 4.448739025175779,
+        radius: 0.02
+      },
+      {
+        name: "Motherf*cking windmills",
+        hint: "Ik wil naar deze locatie, https://www.youtube.com/watch?v=bunG-GGqzQc",
+        lat: 56.038474289396895,
+        lng: 8.006029606252142,
+        radius: 10
+      },
+      {
+        name: "Rare machine",
+        hint: "3 rotoren, 26 lampjes, 4 landen en een plugboard? We gaan naar de geboorteplaats van de uitvinder",
+        lat: 50.1106444,
+        lng: 8.6820917,
+        radius: 9
+      },
+      {
+        name: "Switch it up like nintendo",
+        hint: "We gaan naar de bocht uit dit filmpje. https://files.iscoutgame.com/game-2025/road.mp4",
+        lat: 18.71237844228911,
+        lng: -97.3293917373196,
+        radius: 5
+      },
+      {
+        name: "Kunnen we deze PDF aanpassen?",
+        hint: "PDF's gebruiken we allemaal. Vaak in het formaat van een A4'tje, bijvoorbeeld met doe-opdrachten erop. Een PDF kan allerlei formaten hebben, maar er is wel een maximale grootte. Stel, we leggen de linkerbovenhoek op het wereldwijde hoofdkwartier van Adobe. We reizen naar de rechter onderhoek.",
+        lat: 33.83042923993267,
+        lng: -117.76877338191034,
+        radius: 200
+      },
+      {
+        name: "Kedeng kedeng",
+        hint: "Fans van treinen heb je overal. We gaan naar het station waar fans bijzonder teleurgesteld waren omdat de 'trein' van 11:00 niet vertrok.",
+        lat: -33.874605701265914,
+        lng: 151.22245725661634,
+        radius: 0.01
+      },
+      {
+        name: "Looks like Senegal radiance",
+        hint: "Er zijn mensen die bij het spel GeoGuesser aan de kleur van een paaltje langs de weg kunnen zien in wel land ze zijn. Dat kunnen jullie vast ook. We gaan naar het land van dit paaltje: https://files.iscoutgame.com/game-2025/bollard.png",
+        lat: 8.0300284,
+        lng: -1.0800271,
+        radius: 250
+      },
+      {
+        name: "Nonogram?",
+        hint: "Los de puzzel op: https://files.iscoutgame.com/game-2024/puzzle2.png",
+        lat: 48.900711445712965,
+        lng: 93.45494595476013,
+        radius: 50
+      },
+      {
+        name: "Hammond you blithering idiot",
+        hint: "Ga naar deze tent https://www.youtube.com/watch?v=mA57X_BWbUA&list=PL6idMvMGyE3IEA2m6VMoBUwwAWgsrBPvI&index=15",
+        lat: 49.16377961838467,
+        lng: 97.40827556282149,
+        radius: 100
+      },
+      {
+        name: "Boeing 747",
+        hint: "Een bedrijf heeft speciaal voor zijn klanten een werknemers een prive vliegveld geopend, waar?",
+        lat: 55.7409551,
+        lng: 9.1521722,
+        radius: 2
+      },
+      {
+        name: "Second breakfast?",
+        hint: "'Shall I describe it to you, or would you like me to find you a box?'. We willen naar de film locatie",
+        lat: -41.150267,
+        lng: 174.979046,
+        radius: 10
+      },
+      {
+        name: "Vliegveld",
+        hint: "Sommige vliegvelden liggen dicht bij de centrum van de stad waar het vliegveld naar vernoemd is. Bijvoorbeeld London City Airport ligt op nog geen 10 km van Londen. Andere vliegvelden zijn misleidend, en liggen ver bij de stad vandaan waar ze naar vernoemd zijn. Wij gaan naar het meest misleidende vliegveld (dat ligt nog circa 135 km hemelsbreed van de stad vandaan)",
+        lat: 48.77786604783219,
+        lng: 4.186261187089951,
+        radius: 2
+      },
+      {
+        name: "Spongebob",
+        hint: "In deze straat woont spongebob",
+        lat: 51.53202603643356,
+        lng: 4.271922364356801,
+        radius: 0.2
+      },
+      {
+        name: "Zuidelijke stad",
+        hint: "Dit is de meest zuidelijke stad ter wereld.",
+        lat: -54.8088106,
+        lng: -68.3199749,
+        radius: 5
+      },
+      {
+        name: "Eiffeltoren",
+        hint: "Een beroemd ijzeren bouwwerk in Parijs, Frankrijk.",
+        lat: 48.8584,
+        lng: 2.2945,
+        radius: 0.3 // km
+      },
+      {
+        name: "Amsterdam Centraal",
+        hint: "Het belangrijkste treinstation in de hoofdstad van Nederland.",
+        lat: 52.3780,
+        lng: 4.9000,
+        radius: 0.3 // km
+      },
+      {
+        name: "Colosseum",
+        hint: "Een oud amfitheater in Rome waar gladiatoren vochten.",
+        lat: 41.8902,
+        lng: 12.4922,
+        radius: 0.3 // km
+      },
+      {
+        name: "Lego",
+        hint: "In dit land worden de meeste banden gemaakt",
+        lat: 56.02453877107302,
+        lng: 10.521098060541842,
+        radius: 300
+      },
+    ];
+  
+];
+
