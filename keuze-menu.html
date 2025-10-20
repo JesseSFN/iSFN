@@ -79,22 +79,26 @@
 
      /* Mobiele weergave */
     @media (max-width: 768px) {
-      .button-container {
-        flex-direction: column;
-        align-items: center;
-        gap: 15px;
-      }
+  .button-container {
+    flex-direction: column;     /* Onder elkaar */
+    align-items: center;        /* Centreert de knoppen horizontaal */
+    justify-content: center;    /* Centreert ze verticaal indien nodig */
+    gap: 15px;
+    width: 100%;
+  }
 
-      .explo-button, .welp-button, .scout-button, .bever-button {
-        width: 80%;
-        max-width: 300px;
-      }
+  .explo-button, .welp-button, .scout-button, .bever-button {
+    width: 80%;
+    max-width: 300px;
+    text-align: center;         /* Tekst netjes gecentreerd */
+  }
 
-      .logo {
-        width: 250px;
-        margin-bottom: 30px;
-      }
-    }
+  .logo {
+    width: 250px;
+    margin-bottom: 30px;
+  }
+}
+
 
   </style>
 </head>
