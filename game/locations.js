@@ -82,9 +82,9 @@ const locations = [
       },
       {
         name: "Motherf*cking windmills",
-        hint: "Ik wil naar deze locatie, https://www.youtube.com/watch?v=bunG-GGqzQc",
+        hint: "Ik wil naar deze locatie, https://jessesfn.github.io/iSFN/media-vragen/MFWM.mp4",
         ans: "Vesterhav Syd Offshore Wind Farm",
-        media: "",
+        media: "https://jessesfn.github.io/iSFN/media-vragen/MFWM.mp4",
         lat: 56.038474289396895,
         lng: 8.006029606252142,
         radius: 10
@@ -100,9 +100,9 @@ const locations = [
       },
       {
         name: "Switch it up like nintendo",
-        hint: "We gaan naar de bocht uit dit filmpje. https://files.iscoutgame.com/game-2025/road.mp4",
+        hint: "We gaan naar de bocht uit dit filmpje. https://jessesfn.github.io/iSFN/media-vragen/weg.mp4",
         ans: "Een random bocht in Mexico",
-        media: "",
+        media: "https://jessesfn.github.io/iSFN/media-vragen/weg.mp4",
         lat: 18.71237844228911,
         lng: -97.3293917373196,
         radius: 5
@@ -136,18 +136,18 @@ const locations = [
       },
       {
         name: "Nonogram?",
-        hint: "Los de puzzel op: https://files.iscoutgame.com/game-2024/puzzle2.png",
+        hint: "Los de puzzel op: https://jessesfn.github.io/iSFN/media-vragen/Nonogram.png",
         ans: "Airag Lake mongolië",
-        media: "",
+        media: "https://jessesfn.github.io/iSFN/media-vragen/Nonogram.png",
         lat: 48.900711445712965,
         lng: 93.45494595476013,
         radius: 50
       },
       {
         name: "Hammond you blithering idiot",
-        hint: "Ga naar deze tent https://www.youtube.com/watch?v=mA57X_BWbUA&list=PL6idMvMGyE3IEA2m6VMoBUwwAWgsrBPvI&index=15",
+        hint: "Ga naar deze tent: https://jessesfn.github.io/iSFN/media-vragen/tent.mp4",
         ans: "Random plek in Mongolië",
-        media: "",
+        media: "https://jessesfn.github.io/iSFN/media-vragen/tent.mp4",
         lat: 49.16377961838467,
         lng: 97.40827556282149,
         radius: 100
@@ -264,7 +264,7 @@ const locations = [
         name: "Waar oh waar?",
         hint: "Waar staat dit? https://jessesfn.github.io/iSFN/media-vragen/Vraag%205/vraag5-foto.png",
         ans: "Herwijnen",
-        media: "",
+        media: "https://jessesfn.github.io/iSFN/media-vragen/Vraag%205/vraag5-foto.png",
         lat: 51.8369245,
         lng: 5.1380406,
         radius: 0.02 // ongeveer 20 meter
