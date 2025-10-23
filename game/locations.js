@@ -108,7 +108,7 @@ const locations = [
         radius: 5
       },
       {
-        name: "Kunnen we deze PDF aanpassen?",
+        name: "PDF",
         hint: "PDF's gebruiken we allemaal. Vaak in het formaat van een A4'tje, bijvoorbeeld met doe-opdrachten erop. Een PDF kan allerlei formaten hebben, maar er is wel een maximale grootte. Stel, we leggen de linkerbovenhoek op het wereldwijde hoofdkwartier van Adobe. We reizen naar de rechter onderhoek.",
         ans: "Ergens in Los Angeles",
         media: "",
