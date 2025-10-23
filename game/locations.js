@@ -226,8 +226,8 @@ const locations = [
       {
         name: "Wiskunde",
         hint: "In een cel trachtte iemand het hoofdrekenspel te versnellen. Welk stad werd deze persoon geboren?",
-        lat: 45.5124061,
-        lng: -122.7804382,
+        lat: 46.4845967,
+        lng: 30.7319079,
         radius: 35 // ongeveer 35 km
       },
       {
