@@ -204,7 +204,7 @@ const locations = [
       }, 
       {
         name: "Waar oh waar?",
-        hint: "Waar staat dit? <a href=\"https://jessesfn.github.io/iSFN/media-vragen/Vraag%205/vraag5-foto.png\" target=\"_blank\">Foto</a>",
+        hint: 'Waar staat dit? <a href="https://jessesfn.github.io/iSFN/media-vragen/Vraag%205/vraag5-foto.png" target="_blank">Foto</a>',
         lat: 51.8369245,
         lng: 5.1380406,
         radius: 0.02 // ongeveer 20 meter
