@@ -37,7 +37,6 @@ locations.forEach((location, index) => {
     li.classList.add('selected');
     hint.classList.add('show');
     currentLocation = location;
-    map.setView([location.lat, location.lng], 15);
   });
 
   locationsList.appendChild(li);
