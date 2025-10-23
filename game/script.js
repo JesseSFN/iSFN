@@ -12,7 +12,20 @@ let score = correctLocations.length;
 document.getElementById('score').innerText = "Score: " + score;
 
 // ----------------- LOCATIONS LIST -----------------
-locations.forEach((location, index) => {
+
+// Shuffle function
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+// Shuffle the locations so the list order is random
+const shuffledLocations = shuffleArray([...locations]);
+
+shuffledLocations.forEach((location, index) => {
   const li = document.createElement('li');
   li.classList.add('location-item');
   li.innerHTML = `${index + 1}. ${location.name}`;
@@ -41,6 +54,7 @@ locations.forEach((location, index) => {
 
   locationsList.appendChild(li);
 });
+
 
 // ----------------- MAP CLICK -----------------
 map.on('click', e => {
