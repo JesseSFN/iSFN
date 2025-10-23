@@ -180,5 +180,13 @@ const locations = [
         lat: 56.02453877107302,
         lng: 10.521098060541842,
         radius: 300
-      },    
+      }, 
+      {
+        name: "Tweede Wereldoorlog",
+        hint: "Tijdens de Tweede Wereldoorlog gebruikten Duitse spionnen een toren om een gebied te verkennen. Welke toren was dit?",
+        lat: 51.9580902,
+        lng: 5.5900098,
+        radius: 0.3 // ongeveer 300 meter
+      },   
+      
 ];
