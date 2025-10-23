@@ -172,7 +172,7 @@ const locations = [
         hint: "Een oud amfitheater in Rome waar gladiatoren vochten.",
         lat: 41.8902,
         lng: 12.4922,
-        radius: 0.3 // km
+        radius: 0.3 // 300 meter
       },
       {
         name: "Lego",
@@ -194,6 +194,20 @@ const locations = [
         lat: 50.6919075,
         lng: -1.9734133,
         radius: 5 // ongeveer 5 km
-      },   
+      },
+      {
+        name: "Ongeluk bij ongeluk",
+        hint: "In 2001 veranderde een gebeurtenis in New York het leven van een man voorgoed. Hij zou nooit meer hetzelfde zijn. Welk gebouw zat zijn bedrijf?",
+        lat: 27.0780872,
+        lng: -82.4403958,
+        radius: 0.5 // ongeveer 500 meter
+      }, 
+      {
+        name: "Waar oh waar?",
+        hint: "Waar staat dit? <a href="https://jessesfn.github.io/iSFN/media-vragen/Vraag%205/vraag5-foto.png" target="_blank">Foto</a>",
+        lat: 51.8369245,
+        lng: 5.1380406,
+        radius: 0.02 // ongeveer 20 meter
+      },
       
 ];
