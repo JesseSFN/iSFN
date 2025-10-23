@@ -262,9 +262,9 @@ const locations = [
       }, 
       {
         name: "Waar oh waar?",
-        hint: "Waar staat dit? https://jessesfn.github.io/iSFN/media-vragen/Vraag%205/vraag5-foto.png",
+        hint: "Waar staat dit? https://jessesfn.github.io/iSFN/media-vragen/vraag5-foto.png",
         ans: "Herwijnen",
-        media: "https://jessesfn.github.io/iSFN/media-vragen/Vraag%205/vraag5-foto.png",
+        media: "https://jessesfn.github.io/iSFN/media-vragen/vraag5-foto.png",
         lat: 51.8369245,
         lng: 5.1380406,
         radius: 0.02 // ongeveer 20 meter
@@ -298,9 +298,9 @@ const locations = [
       },
       {
         name: "koud",
-        hint: "SOS SOS CQD CQD",
+        hint: "https://jessesfn.github.io/iSFN/media-vragen/koud.wav",
         ans: "Waar de Titanic gezonken is",
-        media: "",
+        media: "https://jessesfn.github.io/iSFN/media-vragen/koud.wav",
         lat: 41.8171385,
         lng: -49.9650879,
         radius: 500 // ongeveer 500 km
