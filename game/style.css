@@ -77,7 +77,7 @@ ul {
 
 .reset-btn,
 .back-btn {
-  position: sticky;
+  position: absolute;
   top: 10px;
   font-size: 18px;
   padding: 10px 15px;
