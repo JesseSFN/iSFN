@@ -114,5 +114,5 @@ document.getElementById('reset-button').addEventListener('click', () => {
 });
 
 document.getElementById('back-button').addEventListener('click', () => {
-  window.location.href = '../keuze-menu.html';
+  window.location.href = './keuze-menu.html';
 });
