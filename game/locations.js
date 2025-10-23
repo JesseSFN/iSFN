@@ -228,13 +228,13 @@ const locations = [
         hint: "In een cel trachtte iemand het hoofdrekenspel te versnellen. Welk stad werd deze persoon geboren?",
         lat: 46.4845967,
         lng: 30.7319079,
-        radius: 35 // ongeveer 35 km
+        radius: 20 // ongeveer 20 km
       },
       {
         name: "koud",
         hint: "SOS SOS CQD CQD",
         lat: 41.8171385,
         lng: -49.9650879,
-        radius: 100 // ongeveer 35 km
+        radius: 500 // ongeveer 500 km
       },
 ];
