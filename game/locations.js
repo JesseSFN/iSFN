@@ -183,10 +183,17 @@ const locations = [
       }, 
       {
         name: "Tweede Wereldoorlog",
-        hint: "Tijdens de Tweede Wereldoorlog gebruikten Duitse spionnen een toren om een gebied te verkennen. Welke toren was dit?",
+        hint: "Tijdens de Tweede Wereldoorlog gebruikten Duitse spionnen een toren om een gebied te verkennen. Waar staat deze toren?",
         lat: 51.9580902,
         lng: 5.5900098,
         radius: 0.3 // ongeveer 300 meter
+      },
+      {
+        name: "Sine qua non",
+        hint: "In 1907 gebeurde iets op een plek. Als dat nooit gebeurd was, zouden wij hier met z’n allen niet zijn. Welke plek?",
+        lat: 50.6919075,
+        lng: -1.9734133,
+        radius: 5 // ongeveer 5 km
       },   
       
 ];
