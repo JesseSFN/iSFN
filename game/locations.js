@@ -1,5 +1,5 @@
-export const locations = [
-{
+const locations = [
+      {
         name: "De bekende schrijver",
         hint: "Een bekende schrijver overleefde een vliegtuigcrash, vocht in een oorlog, en schreef later over een oude man en een vis. In welke stad werd hij geboren?",
         lat: 41.8878145,
@@ -180,8 +180,5 @@ export const locations = [
         lat: 56.02453877107302,
         lng: 10.521098060541842,
         radius: 300
-      },
-    ];
-  
+      },    
 ];
-

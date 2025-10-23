@@ -1,0 +1,101 @@
+body {
+  margin: 0;
+  padding: 0;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #4db6ac, #b2dfdb);
+  font-family: "Noto Sans", sans-serif;
+}
+
+#map {
+  height: 500px;
+  margin-top: 20px;
+}
+
+#score {
+  font-size: 18px;
+  margin-top: 10px;
+  font-weight: 600;
+  text-align: center;
+}
+
+#locations-list {
+  margin-top: 20px;
+}
+
+ul {
+  padding-left: 0;
+  margin-left: 0;
+}
+
+.location-item {
+  cursor: pointer;
+  list-style-type: none;
+  padding: 8px;
+  background-color: #f0f0f0;
+  margin: 5px 60px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.location-item:hover {
+  background-color: #ddd;
+}
+
+.location-item.selected {
+  background-color: #a0c8e0;
+}
+
+.location-item.correct {
+  background-color: #78c778;
+  pointer-events: none;
+}
+
+.hint-text {
+  display: none;
+  margin-top: 5px;
+  font-style: italic;
+}
+
+.hint-text.show {
+  display: block;
+}
+
+.checkmark {
+  margin-left: 10px;
+  color: white;
+  font-weight: bold;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+.reset-btn,
+.back-btn {
+  position: fixed;
+  top: 10px;
+  font-size: 18px;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  font-family: "Noto Sans", sans-serif;
+}
+
+.reset-btn {
+  right: 10px;
+  background-color: #f44336;
+  color: white;
+}
+
+.back-btn {
+  left: 10px;
+  background-color: #00796b;
+  color: white;
+}
