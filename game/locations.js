@@ -204,10 +204,37 @@ const locations = [
       }, 
       {
         name: "Waar oh waar?",
-        hint: 'Waar staat dit? <a href="https://jessesfn.github.io/iSFN/media-vragen/Vraag%205/vraag5-foto.png" target="_blank">Foto</a>',
+        hint: "Waar staat dit? https://jessesfn.github.io/iSFN/media-vragen/Vraag%205/vraag5-foto.png",
         lat: 51.8369245,
         lng: 5.1380406,
         radius: 0.02 // ongeveer 20 meter
       },
-      
+      {
+        name: "Vliegtuigmodus",
+        hint: "Waar is een iPhone ooit uit een vliegtuig gevallen van 16.000 voet en toch overleefde?",
+        lat: 45.5124061,
+        lng: -122.7804382,
+        radius: 0.02 // ongeveer 20 meter
+      },
+      {
+        name: "hoe laat is het?",
+        hint: "Een klok die niet de juiste tijd aangeeft, is super irritant. Maar als je doel is om iemand in de war te brengen, kan het juist handig zijn. Bijvoorbeeld om tegen het kwaad te strijden. Welk land?",
+        lat: 35.885868,
+        lng: 14.4027236,
+        radius: 300 // ongeveer 300 km
+      },
+      {
+        name: "Wiskunde",
+        hint: "In een cel trachtte iemand het hoofdrekenspel te versnellen. Welk stad werd deze persoon geboren?",
+        lat: 45.5124061,
+        lng: -122.7804382,
+        radius: 35 // ongeveer 35 km
+      },
+      {
+        name: "koud",
+        hint: "SOS SOS CQD CQD",
+        lat: 41.8171385,
+        lng: -49.9650879,
+        radius: 100 // ongeveer 35 km
+      },
 ];
