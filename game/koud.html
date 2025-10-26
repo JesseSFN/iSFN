@@ -1,46 +1,66 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="nl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>koud</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>iSFN</title>
+  <link rel="icon" href="../Images/favicon.png" type="image/png" />
   <style>
-    body{font-family:Arial, Helvetica, sans-serif; display:flex; align-items:center; justify-content:center; min-height:100vh; margin:0; background:#f3f4f6}
-    .box{background:white; padding:20px; border-radius:8px; box-shadow:0 6px 20px rgba(0,0,0,0.08); width:320px; text-align:center}
-    label{display:block; margin-bottom:12px; font-weight:600}
-    input[type="file"]{margin-bottom:12px}
-    audio{width:100%}
-    .hint{font-size:13px; color:#555; margin-top:8px}
+
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #4db6ac, #b2dfdb);
+      font-family: "Noto Sans", sans-serif;
+    }
+
+    ul {
+    padding-left: 0;
+    margin-left: 0;
+   }
+
+    .logo {
+      width: 220px;
+      height: auto;
+      margin-bottom: 40px;
+      user-select: none;
+    }
+
+    .start-button {
+      background-color: #00796b;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 15px 40px;
+      font-size: 22px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+      font-family: Noto Sans;
+    }
+
+    .start-button:hover {
+      background-color: #004d40;
+      transform: scale(1.05);
+    }
+
+    footer {
+      position: absolute;
+      bottom: 15px;
+      font-size: 14px;
+      color: #333;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
-  <div class="box">
-    <label for="file">Laad een mp3 of wav (optioneel)</label>
-
-    <!-- 1) Als je al een URL hebt: zet die hieronder in het src attribuut -->
-    <audio id="player" controls src="../media-vragen/koud.wav"></audio> -->
-
-    <!-- 2) Of gebruik de file-input om een lokaal bestand te kiezen -->
-    <input id="file" type="file" accept="audio/*" />
-    <audio id="player" controls>
-      Je browser ondersteunt geen audio-element.
-    </audio>
-
-    <div class="hint">Kies een lokaal bestand óf wijzig het <code>src</code> in de code.</div>
-  </div>
-
-  <script>
-    const fileInput = document.getElementById('file');
-    const player = document.getElementById('player');
-
-    // Wanneer gebruiker een lokaal bestand kiest: zet het als bron en speel
-    fileInput.addEventListener('change', (e) => {
-      const f = e.target.files && e.target.files[0];
-      if (!f) return;
-      const url = URL.createObjectURL(f);
-      player.src = url;
-      player.play().catch(() => {/* autoplay kan geblokkeerd worden door browser */});
-    });
-  </script>
+<audio id="player" controls src="../media-vragen/koud.wav"></audio>
 </body>
 </html>
+
