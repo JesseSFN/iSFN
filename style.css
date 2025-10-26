@@ -1,0 +1,50 @@
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #4db6ac, #b2dfdb);
+  font-family: "Noto Sans", sans-serif;
+}
+
+ul {
+  padding-left: 0;
+  margin-left: 0;
+}
+
+.logo {
+  width: 220px;
+  height: auto;
+  margin-bottom: 40px;
+  user-select: none;
+}
+
+.start-button {
+  background-color: #00796b;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 15px 40px;
+  font-size: 22px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  font-family: Noto Sans;
+}
+
+.start-button:hover {
+  background-color: #004d40;
+  transform: scale(1.05);
+}
+
+footer {
+  position: absolute;
+  bottom: 15px;
+  font-size: 14px;
+  color: #333;
+  text-align: center;
+}
