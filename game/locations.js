@@ -6,7 +6,7 @@ const locations = [
         media: "",
         lat: 41.8878145,
         lng: -87.7887615,
-        radius: 4
+        radius: 4 // ongeveer 4 km
       },
       {
         name: "Leeuwen standbeeld",
@@ -15,7 +15,7 @@ const locations = [
         media: "",
         lat: 1.2867841,
         lng: 103.8545035,
-        radius: 0.2
+        radius: 0.2 // ongeveer 200 meter
       },
       {
         name: "Beetje nat",
@@ -24,7 +24,7 @@ const locations = [
         media: "",
         lat: 31.5414738,
         lng: 35.4787059,
-        radius: 50
+        radius: 50 // ongeveer 50 km
       },
       {
         name: "Rivieren race",
@@ -33,7 +33,7 @@ const locations = [
         media: "",
         lat: 47.95183609837859,
         lng: 8.502578049847092,
-        radius: 0.02
+        radius: 0.02 // ongeveer 20 meter
       },
       {
         name: "Wat zeg je?",
@@ -42,7 +42,7 @@ const locations = [
         media: "",
         lat: 51.51383972167969,
         lng: -0.0982590988278389,
-        radius: 30
+        radius: 30 // ongeveer 30 km
       },
       {
         name: "Macro foto?",
@@ -51,7 +51,7 @@ const locations = [
         media: "",
         lat: 51.53208474855893,
         lng: -0.17734928191069477,
-        radius: 0.005
+        radius: 0.005 // ongeveer 5 meter
       },
       {
         name: "Computerpraat",
@@ -60,7 +60,7 @@ const locations = [
         media: "",
         lat: -33.8574256,
         lng: 151.2148712,
-        radius: 0.02
+        radius: 0.02 // ongeveer 20 meter
       },
       {
         name: "Cgz hkzkqktz joz?",
@@ -69,7 +69,7 @@ const locations = [
         media: "",
         lat: 10.91882052026577,
         lng: 139.96362647573747,
-        radius: 400
+        radius: 400 // ongeveer 400 km
       },
       {
         name: "Niet de Gamecube maar de?",
@@ -78,7 +78,7 @@ const locations = [
         media: "",
         lat: 51.529314741564455,
         lng: 4.448739025175779,
-        radius: 0.02
+        radius: 0.02 // ongeveer 20 meter
       },
       {
         name: "Motherf*cking windmills",
@@ -87,7 +87,7 @@ const locations = [
         media: "https://jessesfn.github.io/iSFN/media-vragen/MFWM.mp4",
         lat: 56.038474289396895,
         lng: 8.006029606252142,
-        radius: 10
+        radius: 10 // ongeveer 10 km
       },
       {
         name: "Rare machine",
@@ -96,7 +96,7 @@ const locations = [
         media: "",
         lat: 50.1106444,
         lng: 8.6820917,
-        radius: 9
+        radius: 9 // ongeveer 9 km
       },
       {
         name: "Switch it up like nintendo",
@@ -105,7 +105,7 @@ const locations = [
         media: "https://jessesfn.github.io/iSFN/media-vragen/weg.mp4",
         lat: 18.71237844228911,
         lng: -97.3293917373196,
-        radius: 5
+        radius: 5 // ongeveer 5 km
       },
       {
         name: "PDF",
@@ -114,7 +114,7 @@ const locations = [
         media: "",
         lat: 33.83042923993267,
         lng: -117.76877338191034,
-        radius: 200
+        radius: 200 // ongeveer 5 km
       },
       {
         name: "Kedeng kedeng",
@@ -123,7 +123,7 @@ const locations = [
         media: "",
         lat: -33.874605701265914,
         lng: 151.22245725661634,
-        radius: 0.01
+        radius: 0.01 // ongeveer 10 meter
       },
       {
         name: "Looks like Senegal radiance",
@@ -132,7 +132,7 @@ const locations = [
         media: "https://jessesfn.github.io/iSFN/media-vragen/Paal.png",
         lat: 8.0300284,
         lng: -1.0800271,
-        radius: 250
+        radius: 250 // ongeveer 250 km
       },
       {
         name: "Nonogram?",
@@ -141,7 +141,7 @@ const locations = [
         media: "https://jessesfn.github.io/iSFN/media-vragen/Nonogram.png",
         lat: 48.900711445712965,
         lng: 93.45494595476013,
-        radius: 50
+        radius: 50 // ongeveer 50 km
       },
       {
         name: "Hammond you blithering idiot",
@@ -150,7 +150,7 @@ const locations = [
         media: "https://jessesfn.github.io/iSFN/media-vragen/tent.mp4",
         lat: 49.16377961838467,
         lng: 97.40827556282149,
-        radius: 100
+        radius: 100 // ongeveer 100 km
       },
       {
         name: "Boeing 747",
@@ -159,7 +159,7 @@ const locations = [
         media: "",
         lat: 55.7409551,
         lng: 9.1521722,
-        radius: 2
+        radius: 2 // ongeveer 2 km
       },
       {
         name: "Second breakfast?",
@@ -168,7 +168,7 @@ const locations = [
         media: "",
         lat: -41.150267,
         lng: 174.979046,
-        radius: 10
+        radius: 10 // ongeveer 10 km
       },
       {
         name: "Vliegveld",
@@ -177,7 +177,7 @@ const locations = [
         media: "",
         lat: 48.77786604783219,
         lng: 4.186261187089951,
-        radius: 2
+        radius: 2 // ongeveer 2 km
       },
       {
         name: "Spongebob",
@@ -186,7 +186,7 @@ const locations = [
         media: "",
         lat: 51.53202603643356,
         lng: 4.271922364356801,
-        radius: 0.2
+        radius: 0.2 // ongeveer 200 meter
       },
       {
         name: "Zuidelijke stad",
@@ -195,7 +195,7 @@ const locations = [
         media: "",
         lat: -54.8088106,
         lng: -68.3199749,
-        radius: 5
+        radius: 5 //ongeveer 5 km
       },
       {
         name: "Eiffeltoren",
@@ -204,7 +204,7 @@ const locations = [
         media: "",
         lat: 48.8584,
         lng: 2.2945,
-        radius: 0.3 // km
+        radius: 0.3 // ongeveer 300 meter
       },
       {
         name: "Amsterdam Centraal",
@@ -213,7 +213,7 @@ const locations = [
         media: "",
         lat: 52.3780,
         lng: 4.9000,
-        radius: 0.3 // km
+        radius: 0.3 // ongeveer 300 meter
       },
       {
         name: "Colosseum",
@@ -222,8 +222,7 @@ const locations = [
         media: "",
         lat: 41.8902,
         lng: 12.4922,
-        radius: 0.3 // 300 meter
-      },
+        radius: 0.3 // ongeveer 300 meter
       {
         name: "Lego",
         hint: "In dit land worden de meeste banden gemaakt",
@@ -231,7 +230,7 @@ const locations = [
         media: "",
         lat: 56.02453877107302,
         lng: 10.521098060541842,
-        radius: 300
+        radius: 300 // // ongeveer 300 km
       }, 
       {
         name: "Tweede Wereldoorlog",
