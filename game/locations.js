@@ -305,4 +305,13 @@ const locations = [
         lng: -49.9650879,
         radius: 500 // ongeveer 500 km
       },
+      {
+        name: "Tik Tik",
+        hint: "21,42,11,32",
+        ans: "Tap Code voor FRAM die natuurlijk in Oslo zit",
+        media: "",
+        lat: 59.9033623,
+        lng: 10.699552,
+        radius: 0.2 // ongeveer 20 meter
+      },
 ];
