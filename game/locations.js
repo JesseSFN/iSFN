@@ -223,11 +223,12 @@ const locations = [
         lat: 41.8902,
         lng: 12.4922,
         radius: 0.3 // ongeveer 300 meter
+      },
       {
         name: "Lego",
         hint: "In dit land worden de meeste banden gemaakt",
         ans: "Denemarken",
-        media: "",
+        mediSa: "",
         lat: 56.02453877107302,
         lng: 10.521098060541842,
         radius: 300 // // ongeveer 300 km
