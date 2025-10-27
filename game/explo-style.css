@@ -101,8 +101,16 @@ header img {
   font-weight: 700;
 }
 
-button {
-  background: var(--accent);
+confirmbtn {
+  background: rgb(3, 255, 3);
+  color: #000000;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+resetbtn {
+  background: red;
   color: #fff;
   border: none;
   padding: 8px 12px;
