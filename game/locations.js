@@ -298,7 +298,7 @@ const locations = [
       },
       {
         name: "koud",
-        hint: " v ",
+        hint: "",
         ans: "Waar de Titanic gezonken is",
         media: "https://jessesfn.github.io/iSFN/media-vragen/koud.wav",
         lat: 41.8171385,
