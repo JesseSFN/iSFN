@@ -1,5 +1,5 @@
 // timer.js
-export function startMotivatieTimer(intervalMs = 60000) {
+export function startMotivatieTimer(intervalMs = 3600000) {
   const audio = new Audio('../Sounds/OPSCHIETEN.wav'); // je mp3
   audio.volume = 1; // max volume
   audio.preload = 'auto';
