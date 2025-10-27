@@ -127,7 +127,7 @@ const locations = [
       },
       {
         name: "Looks like Senegal radiance",
-        hint: "Er zijn mensen die bij het spel GeoGuesser aan de kleur van een paaltje langs de weg kunnen zien in wel land ze zijn. Dat kunnen jullie vast ook. We gaan naar het land van dit paaltje: https://jessesfn.github.io/iSFN/media-vragen/Paal.png",
+        hint: "Er zijn mensen die bij het spel GeoGuesser aan de kleur van een paaltje langs de weg kunnen zien in wel land ze zijn. Dat kunnen jullie vast ook. We gaan naar het land van dit paaltje:",
         ans: "Ghana",
         media: "https://jessesfn.github.io/iSFN/media-vragen/Paal.png",
         lat: 8.0300284,
