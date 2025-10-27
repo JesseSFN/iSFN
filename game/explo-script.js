@@ -115,6 +115,7 @@ document.getElementById('confirmBtn').addEventListener('click', () => {
 document.getElementById('resetBtn').addEventListener('click', () => {
   score = 0;
   updateScore();
+  loadQuestion(pickRandomIndex);
   usedIndexes.clear(); 
   loadQuestion(pickRandomIndex());
 });
