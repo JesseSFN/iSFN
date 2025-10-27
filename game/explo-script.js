@@ -36,6 +36,22 @@ function pickNextIndex() {
   return idx;
 }
 
+function pickRandomIndex() {
+  if (LOCS.length === 0) return -1;
+
+  // Als alle locaties al gebruikt zijn, reset de set
+  if (usedIndexes.size >= LOCS.length) usedIndexes.clear();
+
+  let idx;
+  do {
+    idx = Math.floor(Math.random() * LOCS.length);
+  } while (usedIndexes.has(idx));
+
+  usedIndexes.add(idx);
+  return idx;
+}
+
+
 function loadQuestion(idx) {
   currentIndex = idx;
   const item = LOCS[idx];
@@ -95,25 +111,32 @@ map.on('click', function(e) {
   guessMarker = L.marker([e.latlng.lat, e.latlng.lng], { title: 'Jouw gok' }).addTo(map);
 });
 
-document.getElementById('confirmBtn').addEventListener('click', ()=>{
-      if(!selectedCoords || currentIndex === -1) return;
-      const { lat, lng } = selectedCoords;
-      const item = LOCS[currentIndex];
-      const dist = Math.round(haversine(lat, lng, item.lat, item.lon));
+document.getElementById('confirmBtn').addEventListener('click', () => {
+  if (!selectedCoords || currentIndex === -1) return;
+  const { lat, lng } = selectedCoords;
+  const item = LOCS[currentIndex];
+  const dist = Math.round(haversine(lat, lng, item.lat, item.lng));
+  const radius = (item.radius ? item.radius * 1000 : 20000);
 
-      if(dist <= ACCEPT_RADIUS_METERS){
-        score++;
-        updateScore();
-        showFeedbackCenter('GOED', true);
-        setTimeout(()=> loadQuestion(pickRandomIndex()), 1000);
-      } else {
-        showFeedbackCenter('FOUT', false);
-      }
-    });
-
-    document.getElementById('resetBtn').addEventListener('click', ()=>{
-      score=0; updateScore(); usedIndexes.clear(); loadQuestion(pickRandomIndex());
-    });
-
+  if (dist <= radius) {
+    score++;
     updateScore();
-    if(LOCS.length>0) loadQuestion(pickRandomIndex());
+    showFeedbackCenter('GOED', true);
+    setTimeout(() => loadQuestion(pickNextIndex()), 1000);
+  } else {
+    showFeedbackCenter('FOUT', false);
+  }
+});
+
+document.getElementById('resetBtn').addEventListener('click', () => {
+  score = 0;
+  updateScore();
+  usedIndexes.clear(); // zet alles op nul
+  loadQuestion(pickRandomIndex());
+});
+
+
+// Initialize
+updateScore();
+if (LOCS.length > 0) loadQuestion(pickRandomIndex());
+
