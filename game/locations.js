@@ -82,7 +82,7 @@ const locations = [
       },
       {
         name: "Motherf*cking windmills",
-        hint: "Ik wil naar deze locatie, https://jessesfn.github.io/iSFN/media-vragen/MFWM.mp4",
+        hint: "Ik wil naar deze locatie:",
         ans: "Vesterhav Syd Offshore Wind Farm",
         media: "https://jessesfn.github.io/iSFN/media-vragen/MFWM.mp4",
         lat: 56.038474289396895,
@@ -100,7 +100,7 @@ const locations = [
       },
       {
         name: "Switch it up like nintendo",
-        hint: "We gaan naar de bocht uit dit filmpje. https://jessesfn.github.io/iSFN/media-vragen/weg.mp4",
+        hint: "We gaan naar de bocht uit dit filmpje.",
         ans: "Een random bocht in Mexico",
         media: "https://jessesfn.github.io/iSFN/media-vragen/weg.mp4",
         lat: 18.71237844228911,
@@ -136,7 +136,7 @@ const locations = [
       },
       {
         name: "Nonogram?",
-        hint: "Los de puzzel op: https://jessesfn.github.io/iSFN/media-vragen/Nonogram.png",
+        hint: "Los de puzzel op:",
         ans: "Airag Lake mongolië",
         media: "https://jessesfn.github.io/iSFN/media-vragen/Nonogram.png",
         lat: 48.900711445712965,
@@ -145,7 +145,7 @@ const locations = [
       },
       {
         name: "Hammond you blithering idiot",
-        hint: "Ga naar deze tent: https://jessesfn.github.io/iSFN/media-vragen/tent.mp4",
+        hint: "Ga naar deze tent:",
         ans: "Random plek in Mongolië",
         media: "https://jessesfn.github.io/iSFN/media-vragen/tent.mp4",
         lat: 49.16377961838467,
@@ -262,7 +262,7 @@ const locations = [
       }, 
       {
         name: "Waar oh waar?",
-        hint: "Waar staat dit? https://jessesfn.github.io/iSFN/media-vragen/vraag5-foto.png",
+        hint: "Waar staat dit?",
         ans: "Herwijnen",
         media: "https://jessesfn.github.io/iSFN/media-vragen/vraag5-foto.png",
         lat: 51.8369245,
@@ -298,7 +298,7 @@ const locations = [
       },
       {
         name: "koud",
-        hint: "https://jessesfn.github.io/iSFN/game/koud.html",
+        hint: " v ",
         ans: "Waar de Titanic gezonken is",
         media: "https://jessesfn.github.io/iSFN/media-vragen/koud.wav",
         lat: 41.8171385,
