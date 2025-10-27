@@ -122,4 +122,4 @@ document.getElementById('resetBtn').addEventListener('click', () => {
 
 // Initialize
 updateScore();
-if (LOCS.length > 0) loadQuestion(0);
+if (LOCS.length > 0) loadQuestion(pickRandomIndex());
