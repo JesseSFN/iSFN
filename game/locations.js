@@ -314,4 +314,22 @@ const locations = [
         lng: 10.699552,
         radius: 0.2 // ongeveer 20 meter
       },
+      {
+        name: "Carpe Diem",
+        hint: "O Captain! my Captain!",
+        ans: "school waar Dead poets society is opgenomen",
+        media: "",
+        lat: 39.4331744,
+        lng: -75.6897098,
+        radius: 0.5 // ongeveer 50 meter
+      },
+      {
+        name: "Bleek",
+        hint: "Toen sterren speren wierpen neer, En hemel drenkte in tranenmeer, Glimlachte hij om wat hij schiep?Maakte hij, die ’t Lam vormgaf, ook die?",
+        ans: "William Blake - Soho London",
+        media: "",
+        lat: 51.5136782,
+        lng: -0.1347802,
+        radius: 1 // ongeveer 1 km
+      },
 ];
