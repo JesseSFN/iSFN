@@ -122,7 +122,7 @@ document.getElementById('confirmBtn').addEventListener('click', () => {
     score++;
     updateScore();
     showFeedbackCenter('GOED', true);
-    setTimeout(() => loadQuestion(pickNextIndex()), 1000);
+    setTimeout(() => loadQuestion(pickRandomIndex()), 1000);
   } else {
     showFeedbackCenter('FOUT', false);
   }
