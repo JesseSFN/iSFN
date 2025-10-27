@@ -95,30 +95,25 @@ map.on('click', function(e) {
   guessMarker = L.marker([e.latlng.lat, e.latlng.lng], { title: 'Jouw gok' }).addTo(map);
 });
 
-document.getElementById('confirmBtn').addEventListener('click', () => {
-  if (!selectedCoords || currentIndex === -1) return;
-  const { lat, lng } = selectedCoords;
-  const item = LOCS[currentIndex];
-  const dist = Math.round(haversine(lat, lng, item.lat, item.lng));
-  const radius = (item.radius ? item.radius * 1000 : 20000);
+document.getElementById('confirmBtn').addEventListener('click', ()=>{
+      if(!selectedCoords || currentIndex === -1) return;
+      const { lat, lng } = selectedCoords;
+      const item = LOCS[currentIndex];
+      const dist = Math.round(haversine(lat, lng, item.lat, item.lon));
 
-  if (dist <= radius) {
-    score++;
+      if(dist <= ACCEPT_RADIUS_METERS){
+        score++;
+        updateScore();
+        showFeedbackCenter('GOED', true);
+        setTimeout(()=> loadQuestion(pickRandomIndex()), 1000);
+      } else {
+        showFeedbackCenter('FOUT', false);
+      }
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', ()=>{
+      score=0; updateScore(); usedIndexes.clear(); loadQuestion(pickRandomIndex());
+    });
+
     updateScore();
-    showFeedbackCenter('GOED', true);
-    setTimeout(()=> loadQuestion(pickRandomIndex()), 1000);
-  } else {
-    showFeedbackCenter('FOUT', false);
-  }
-});
-
-document.getElementById('resetBtn').addEventListener('click', () => {
-  score = 0;
-  updateScore();
-  loadQuestion(pickRandomIndex);
-  usedIndexes.clear();
-});
-
-// Initialize
-updateScore();
-if (LOCS.length > 0) loadQuestion(pickRandomIndex());
+    if(LOCS.length>0) loadQuestion(pickRandomIndex());
