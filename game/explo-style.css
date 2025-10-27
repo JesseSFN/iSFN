@@ -102,7 +102,7 @@ header img {
 }
 
 confirmbtn {
-  background: rgb(3, 255, 3);
+  background: rgb(1, 158, 1);
   color: #000000;
   border: none;
   padding: 8px 12px;
@@ -110,7 +110,7 @@ confirmbtn {
   cursor: pointer;
 }
 resetbtn {
-  background: red;
+  background: rgb(185, 1, 1);
   color: #fff;
   border: none;
   padding: 8px 12px;
