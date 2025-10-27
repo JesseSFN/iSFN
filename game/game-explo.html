@@ -8,46 +8,42 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <style>
     html, body { height: 100%; margin: 0; font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background:#f0f2f5 }
-    .app { display:flex; height:100vh; gap: 12px; padding: 12px; box-sizing: border-box }
 
-    /* Left map */
+    header { display:flex; align-items:center; justify-content:center; background:#fff; padding:10px 0; box-shadow:0 4px 10px rgba(0,0,0,0.08); position:relative; z-index:1000; }
+    header img { height:40px; }
+
+    .app { display:flex; height:calc(100vh - 60px); gap: 12px; padding: 12px; box-sizing: border-box }
+
     #map { flex: 1 1 60%; min-width: 320px; border-radius: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.12); }
 
-    /* Right white panel */
     .panel { flex: 0 0 360px; background: #fff; border-radius: 12px; padding: 16px; position: relative; display:flex; flex-direction:column; box-shadow: 0 6px 18px rgba(0,0,0,0.08) }
 
-    /* Logo area */
-    .logo { width: 120px; position:absolute; top:12px; left:12px; }
-    .logo img { width:100%; height:auto; }
-
-    /* Name top-right */
     .place-name { position: absolute; top: 12px; right: 12px; font-weight:700; font-size:18px; text-align:right }
 
-    /* Hint middle-right */
-    .hint { margin-top: 80px; margin-bottom: 12px; align-self: flex-end; max-width: 100%; width: 100%; text-align: right; font-size:15px; color:#333 }
+    .hint { margin-top: 60px; margin-bottom: 12px; align-self: flex-end; max-width: 100%; width: 100%; text-align: right; font-size:15px; color:#333 }
 
-    /* Media */
     .media { margin-top: 8px; align-self: stretch; display:flex; justify-content:center; align-items:center }
     .media img, .media video { max-width:100%; max-height:340px; border-radius:8px; box-shadow: 0 6px 12px rgba(0,0,0,0.06) }
 
-    /* Footer */
     .footer { margin-top:auto; display:flex; gap:8px; align-items:center }
     .score { font-weight:700 }
     button { background:#0b74de; color:#fff; border:none; padding:8px 12px; border-radius:8px; cursor:pointer }
     button.secondary { background:#e6eef9; color:#0b74de }
 
-    /* Feedback */
-    .feedback { position: absolute; left: 16px; top: 16px; background: rgba(255,255,255,0.9); padding:8px 12px; border-radius:8px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); display:none; }
+    .feedback-center { position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); font-size:80px; font-weight:900; color:#fff; text-shadow:0 0 15px rgba(0,0,0,0.4); display:none; z-index:2000; }
 
     @media (max-width: 880px){ .app{flex-direction:column} .panel{order:2; width:100%; flex-basis:auto} #map{order:1;height:50vh} .place-name{text-align:left; right:unset; left:12px } .hint{text-align:left} }
   </style>
 </head>
 <body>
+  <header>
+    <img src="../Images/logo.png" alt="Explo Logo" />
+  </header>
+
   <div class="app">
     <div id="map"></div>
 
     <div class="panel">
-      <div class="logo"><img src="../Images/logo.png" alt="Explo Logo" /></div>
       <div class="place-name" id="place-name">--</div>
       <div class="hint" id="hint">Klik op de kaart om te raden waar dit is.</div>
 
@@ -56,18 +52,17 @@
       <div class="footer">
         <div class="score" id="score">Score: 0</div>
         <div style="flex:1"></div>
-        <button id="skipBtn" class="secondary">Sla over</button>
+        <button id="confirmBtn">Bevestig</button>
         <button id="resetBtn">Reset</button>
       </div>
-
-      <div class="feedback" id="feedback">Feedback</div>
     </div>
   </div>
+
+  <div class="feedback-center" id="feedbackCenter"></div>
 
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script src="locations.js"></script>
   <script>
-    // --- Data ---
     const LOCS = (typeof locations !== 'undefined' && Array.isArray(locations)) ? locations : [];
 
     let score = 0;
@@ -79,20 +74,21 @@
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© OpenStreetMap contributors' }).addTo(map);
 
     let guessMarker = null;
+    let selectedCoords = null;
 
     const placeNameEl = document.getElementById('place-name');
     const hintEl = document.getElementById('hint');
     const mediaArea = document.getElementById('media-area');
     const scoreEl = document.getElementById('score');
-    const feedbackEl = document.getElementById('feedback');
+    const feedbackCenter = document.getElementById('feedbackCenter');
 
     function updateScore() { scoreEl.textContent = `Score: ${score}` }
 
-    function showFeedback(text, ok=true){
-      feedbackEl.style.display='block';
-      feedbackEl.style.background = ok ? 'rgba(235,255,235,0.95)' : 'rgba(255,235,235,0.95)';
-      feedbackEl.textContent = text;
-      setTimeout(()=>feedbackEl.style.display='none', 1500);
+    function showFeedbackCenter(text, good){
+      feedbackCenter.textContent = text;
+      feedbackCenter.style.display = 'block';
+      feedbackCenter.style.color = good ? '#28a745' : '#dc3545';
+      setTimeout(()=> feedbackCenter.style.display='none', 1000);
     }
 
     function pickRandomIndex(){
@@ -127,6 +123,7 @@
 
       map.setView([item.lat, item.lon], 3);
       if(guessMarker){ map.removeLayer(guessMarker); guessMarker = null; }
+      selectedCoords = null;
     }
 
     function deg2rad(deg){ return deg * Math.PI/180 }
@@ -140,27 +137,30 @@
     }
 
     map.on('click', function(e){
-      if(currentIndex === -1) return;
-      const { lat, lng } = e.latlng;
-      const item = LOCS[currentIndex];
-
+      selectedCoords = e.latlng;
       if(guessMarker) map.removeLayer(guessMarker);
-      guessMarker = L.marker([lat,lng], { title: 'Jouw gok' }).addTo(map);
+      guessMarker = L.marker([e.latlng.lat, e.latlng.lng], { title: 'Jouw gok' }).addTo(map);
+    });
 
+    document.getElementById('confirmBtn').addEventListener('click', ()=>{
+      if(!selectedCoords || currentIndex === -1) return;
+      const { lat, lng } = selectedCoords;
+      const item = LOCS[currentIndex];
       const dist = Math.round(haversine(lat, lng, item.lat, item.lon));
 
       if(dist <= ACCEPT_RADIUS_METERS){
         score++;
         updateScore();
-        showFeedback('Goed!', true);
+        showFeedbackCenter('GOED', true);
         setTimeout(()=> loadQuestion(pickRandomIndex()), 1000);
       } else {
-        showFeedback('Fout!', false);
+        showFeedbackCenter('FOUT', false);
       }
     });
 
-    document.getElementById('skipBtn').addEventListener('click', ()=> loadQuestion(pickRandomIndex()));
-    document.getElementById('resetBtn').addEventListener('click', ()=>{ score=0; updateScore(); usedIndexes.clear(); loadQuestion(pickRandomIndex()); });
+    document.getElementById('resetBtn').addEventListener('click', ()=>{
+      score=0; updateScore(); usedIndexes.clear(); loadQuestion(pickRandomIndex());
+    });
 
     updateScore();
     if(LOCS.length>0) loadQuestion(pickRandomIndex());
