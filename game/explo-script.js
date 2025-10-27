@@ -118,14 +118,24 @@ document.getElementById('confirmBtn').addEventListener('click', () => {
   const dist = Math.round(haversine(lat, lng, item.lat, item.lng));
   const radius = (item.radius ? item.radius * 1000 : 20000);
 
-  if (dist <= radius) {
+  const correctSound = new Audio('../Sounds/Correct.mp3'); // Replace with your file path
+  const wrongSound = new Audio('../Sounds/Incorrect.mp3');
+
+if (dist <= radius) {
     score++;
     updateScore();
     showFeedbackCenter('GOED', true);
+
+    // Play correct sound
+    correctSound.play();
+
     setTimeout(() => loadQuestion(pickRandomIndex()), 1000);
-  } else {
+} else {
     showFeedbackCenter('FOUT', false);
-  }
+
+    // Play wrong sound
+    wrongSound.play();
+}
 });
 
 document.getElementById('resetBtn').addEventListener('click', () => {
