@@ -3,41 +3,167 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Explo — Pinpoint Game</title>
+  <title>Explo — Pinpoint Game (Dark Mode)</title>
   <link rel="icon" href="../Images/favicon.png" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <style>
-    html, body { height: 100%; margin: 0; font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background:#f0f2f5 }
+    :root {
+      --bg: #121212;
+      --panel-bg: #1e1e1e;
+      --text: #ffffff;
+      --hint: #bbbbbb;
+      --accent: #0b74de;
+    }
 
-    header { display:flex; align-items:center; justify-content:center; background:#fff; padding:10px 0; box-shadow:0 4px 10px rgba(0,0,0,0.08); position:relative; z-index:1000; }
-    header img { height:40px; }
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: var(--bg);
+      color: var(--text);
+    }
 
-    .app { display:flex; height:calc(100vh - 60px); gap: 12px; padding: 12px; box-sizing: border-box }
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--panel-bg);
+      padding: 10px 0;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+      position: relative;
+      z-index: 1000;
+    }
 
-    #map { flex: 1 1 60%; min-width: 320px; border-radius: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.12); }
+    header img {
+      height: 40px;
+    }
 
-    .panel { flex: 0 0 360px; background: #fff; border-radius: 12px; padding: 16px; position: relative; display:flex; flex-direction:column; box-shadow: 0 6px 18px rgba(0,0,0,0.08) }
+    .app {
+      display: flex;
+      height: calc(100vh - 60px);
+      gap: 12px;
+      padding: 12px;
+      box-sizing: border-box;
+    }
 
-    .place-name { position: absolute; top: 12px; right: 12px; font-weight:700; font-size:18px; text-align:right }
+    #map {
+      flex: 1 1 60%;
+      min-width: 320px;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+    }
 
-    .hint { margin-top: 60px; margin-bottom: 12px; align-self: flex-end; max-width: 100%; width: 100%; text-align: right; font-size:15px; color:#333 }
+    .panel {
+      flex: 0 0 360px;
+      background: var(--panel-bg);
+      border-radius: 12px;
+      padding: 16px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+    }
 
-    .media { margin-top: 8px; align-self: stretch; display:flex; justify-content:center; align-items:center }
-    .media img, .media video, .media audio { max-width:100%; max-height:340px; border-radius:8px; box-shadow: 0 6px 12px rgba(0,0,0,0.06) }
+    .place-name {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      font-weight: 700;
+      font-size: 18px;
+      text-align: right;
+    }
 
-    .footer { margin-top:auto; display:flex; gap:8px; align-items:center }
-    .score { font-weight:700 }
-    button { background:#0b74de; color:#fff; border:none; padding:8px 12px; border-radius:8px; cursor:pointer }
-    button.secondary { background:#e6eef9; color:#0b74de }
+    .hint {
+      margin-top: 60px;
+      margin-bottom: 12px;
+      align-self: flex-end;
+      max-width: 100%;
+      width: 100%;
+      text-align: right;
+      font-size: 15px;
+      color: var(--hint);
+    }
 
-    .feedback-center { position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); font-size:80px; font-weight:900; color:#fff; text-shadow:0 0 15px rgba(0,0,0,0.4); display:none; z-index:2000; }
+    .media {
+      margin-top: 8px;
+      align-self: stretch;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-    @media (max-width: 880px){ .app{flex-direction:column} .panel{order:2; width:100%; flex-basis:auto} #map{order:1;height:50vh} .place-name{text-align:left; right:unset; left:12px } .hint{text-align:left} }
+    .media img, .media video, .media audio {
+      max-width: 100%;
+      max-height: 340px;
+      border-radius: 8px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+    }
+
+    .footer {
+      margin-top: auto;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .score {
+      font-weight: 700;
+    }
+
+    button {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button.secondary {
+      background: #2a2a2a;
+      color: var(--accent);
+    }
+
+    .feedback-center {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 80px;
+      font-weight: 900;
+      color: #fff;
+      text-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+      display: none;
+      z-index: 2000;
+    }
+
+    @media (max-width: 880px) {
+      .app {
+        flex-direction: column;
+      }
+      .panel {
+        order: 2;
+        width: 100%;
+        flex-basis: auto;
+      }
+      #map {
+        order: 1;
+        height: 50vh;
+      }
+      .place-name {
+        text-align: left;
+        right: unset;
+        left: 12px;
+      }
+      .hint {
+        text-align: left;
+      }
+    }
   </style>
 </head>
 <body>
   <header>
-    <img src="../Images/SFN_Logo_V4.png" alt="Explo Logo" />
+    <img src="../Images/SFN_Logo_V4_white.png" alt="Explo Logo" />
   </header>
 
   <div class="app">
@@ -69,8 +195,11 @@
     let currentIndex = -1;
     let usedIndexes = new Set();
 
-    const map = L.map('map', { worldCopyJump: true }).setView([20,0], 2);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© OpenStreetMap contributors' }).addTo(map);
+    const map = L.map('map', { worldCopyJump: true }).setView([20, 0], 2);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
 
     let guessMarker = null;
     let selectedCoords = null;
@@ -83,39 +212,37 @@
 
     function updateScore() { scoreEl.textContent = `Score: ${score}` }
 
-    function showFeedbackCenter(text, good){
+    function showFeedbackCenter(text, good) {
       feedbackCenter.textContent = text;
       feedbackCenter.style.display = 'block';
       feedbackCenter.style.color = good ? '#28a745' : '#dc3545';
-      setTimeout(()=> feedbackCenter.style.display='none', 1000);
+      setTimeout(() => feedbackCenter.style.display = 'none', 1000);
     }
 
-    function pickRandomIndex(){
-      if(usedIndexes.size >= LOCS.length) usedIndexes.clear();
-      let idx;
-      do { idx = Math.floor(Math.random()*LOCS.length) } while(usedIndexes.has(idx) && usedIndexes.size < LOCS.length);
-      usedIndexes.add(idx);
+    function pickNextIndex() {
+      let idx = currentIndex + 1;
+      if (idx >= LOCS.length) idx = 0;
       return idx;
     }
 
-    function loadQuestion(idx){
+    function loadQuestion(idx) {
       currentIndex = idx;
       const item = LOCS[idx];
       placeNameEl.textContent = item.name || '--';
       hintEl.textContent = item.hint || '';
 
       mediaArea.innerHTML = '';
-      if(item.media){
+      if (item.media) {
         const mediaURL = item.media;
         const ext = mediaURL.split('.').pop().toLowerCase();
 
-        if(['mp4','webm','ogg'].includes(ext)){
+        if (['mp4', 'webm', 'ogg'].includes(ext)) {
           const v = document.createElement('video');
           v.src = mediaURL;
           v.controls = true;
-          v.setAttribute('playsinline','');
+          v.setAttribute('playsinline', '');
           mediaArea.appendChild(v);
-        } else if(['mp3','wav','ogg'].includes(ext)){
+        } else if (['mp3', 'wav', 'ogg'].includes(ext)) {
           const a = document.createElement('audio');
           a.src = mediaURL;
           a.controls = true;
@@ -128,50 +255,52 @@
         }
       }
 
-      map.setView([item.lat, item.lng], 3);
-      if(guessMarker){ map.removeLayer(guessMarker); guessMarker = null; }
+      map.setView([20, 0], 2); // always reset to center view
+      if (guessMarker) { map.removeLayer(guessMarker); guessMarker = null; }
       selectedCoords = null;
     }
 
-    function deg2rad(deg){ return deg * Math.PI/180 }
-    function haversine(lat1, lon1, lat2, lon2){
+    function deg2rad(deg) { return deg * Math.PI / 180 }
+    function haversine(lat1, lon1, lat2, lon2) {
       const R = 6371000;
-      const dLat = deg2rad(lat2-lat1);
-      const dLon = deg2rad(lon2-lon1);
-      const a = Math.sin(dLat/2)**2 + Math.cos(deg2rad(lat1))*Math.cos(deg2rad(lat2))*Math.sin(dLon/2)**2;
-      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+      const dLat = deg2rad(lat2 - lat1);
+      const dLon = deg2rad(lon2 - lon1);
+      const a = Math.sin(dLat / 2) ** 2 + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLon / 2) ** 2;
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
       return R * c;
     }
 
-    map.on('click', function(e){
+    map.on('click', function (e) {
       selectedCoords = e.latlng;
-      if(guessMarker) map.removeLayer(guessMarker);
+      if (guessMarker) map.removeLayer(guessMarker);
       guessMarker = L.marker([e.latlng.lat, e.latlng.lng], { title: 'Jouw gok' }).addTo(map);
     });
 
-    document.getElementById('confirmBtn').addEventListener('click', ()=>{
-      if(!selectedCoords || currentIndex === -1) return;
+    document.getElementById('confirmBtn').addEventListener('click', () => {
+      if (!selectedCoords || currentIndex === -1) return;
       const { lat, lng } = selectedCoords;
       const item = LOCS[currentIndex];
       const dist = Math.round(haversine(lat, lng, item.lat, item.lng));
       const radius = (item.radius ? item.radius * 1000 : 20000);
 
-      if(dist <= radius){
+      if (dist <= radius) {
         score++;
         updateScore();
         showFeedbackCenter('GOED', true);
-        setTimeout(()=> loadQuestion(pickRandomIndex()), 1000);
+        setTimeout(() => loadQuestion(pickNextIndex()), 1000);
       } else {
         showFeedbackCenter('FOUT', false);
       }
     });
 
-    document.getElementById('resetBtn').addEventListener('click', ()=>{
-      score=0; updateScore(); usedIndexes.clear(); loadQuestion(pickRandomIndex());
+    document.getElementById('resetBtn').addEventListener('click', () => {
+      score = 0;
+      updateScore();
+      loadQuestion(0);
     });
 
     updateScore();
-    if(LOCS.length>0) loadQuestion(pickRandomIndex());
+    if (LOCS.length > 0) loadQuestion(0);
   </script>
 </body>
 </html>
