@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Explo — Pinpoint Game</title>
+  <link rel="icon" href="../Images/favicon.png" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    /* Layout */
+    html, body { height: 100%; margin: 0; font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background:#f0f2f5 }
+    .app { display:flex; height:100vh; gap: 12px; padding: 12px; box-sizing: border-box }
+
+    /* Left: kaart */
+    #map { flex: 1 1 60%; min-width: 320px; border-radius: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.12); }
+
+    /* Right: wit vlak */
+    .panel { flex: 0 0 360px; background: #fff; border-radius: 12px; padding: 16px; position: relative; display:flex; flex-direction:column; box-shadow: 0 6px 18px rgba(0,0,0,0.08) }
+
+    /* Name top-right */
+    .place-name { position: absolute; top: 12px; right: 12px; font-weight:700; font-size:18px; text-align:right }
+
+    /* Hint in the right middle */
+    .hint { margin-top: 70px; margin-bottom: 12px; align-self: flex-end; max-width: 100%; width: 100%; text-align: right; font-size:15px; color:#333 }
+
+    /* Media below the hint */
+    .media { margin-top: 8px; align-self: stretch; display:flex; justify-content:center; align-items:center }
+    .media img, .media video { max-width:100%; max-height:340px; border-radius:8px; box-shadow: 0 6px 12px rgba(0,0,0,0.06) }
+
+    /* Controls and score at bottom */
+    .footer { margin-top:auto; display:flex; gap:8px; align-items:center }
+    .score { font-weight:700 }
+    button { background:#0b74de; color:#fff; border:none; padding:8px 12px; border-radius:8px; cursor:pointer }
+    button.secondary { background:#e6eef9; color:#0b74de }
+
+    /* Small feedback */
+    .feedback { position: absolute; left: 16px; top: 16px; background: rgba(255,255,255,0.9); padding:8px 12px; border-radius:8px; box-shadow: 0 4px 10px rgba(0,0,0,0.08) }
+
+    /* Responsive */
+    @media (max-width: 880px){ .app{flex-direction:column} .panel{order:2; width:100%; flex-basis:auto} #map{order:1;height:50vh} .place-name{text-align:left; right:unset; left:12px } .hint{text-align:left} }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div id="map"></div>
+
+    <div class="panel">
+      <div class="place-name" id="place-name">--</div>
+      <div class="hint" id="hint">Klik op de kaart om te raden waar dit is.</div>
+
+      <div class="media" id="media-area"></div>
+
+      <div class="footer">
+        <div class="score" id="score">Score: 0</div>
+        <div style="flex:1"></div>
+        <button id="skipBtn" class="secondary">Sla over</button>
+        <button id="resetBtn">Reset</button>
+      </div>
+
+      <div class="feedback" id="feedback" style="display:none">Feedback</div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    // --- data source ---
+    // De code probeert eerst 'locations' te gebruiken die eventueel geladen wordt vanuit locations.js.
+    // Als die niet bestaat, valt hij terug op een voorbeeldset.
+
+    const DEFAULT_LOCATIONS = [
+      { name: 'Eiffeltoren', lat:48.8584, lon:2.2945, hint: 'Een beroemde toren in Parijs', media: 'https://upload.wikimedia.org/wikipedia/commons/a/a8/Tour_Eiffel_Wikimedia_Commons.jpg', mediaType: 'image' },
+      { name: 'Toren van Pisa', lat:43.7230, lon:10.3966, hint: 'Scheeftoren in Italië', media: 'https://upload.wikimedia.org/wikipedia/commons/6/6d/Leaning_Tower_of_Pisa_2013.jpg', mediaType: 'image' },
+      { name: 'Rijksmuseum', lat:52.359997, lon:4.885218, hint: 'Museum in Amsterdam', media: '', mediaType: '' }
+    ];
+
+    const LOCS = (typeof locations !== 'undefined' && Array.isArray(locations) && locations.length>0) ? locations : DEFAULT_LOCATIONS;
+
+    // --- instellingen ---
+    let score = 0;
+    let currentIndex = -1;
+    let usedIndexes = new Set();
+    const ACCEPT_RADIUS_METERS = 20000; // pas aan: 20 km accepteert als 'goed'
+
+    // --- leaflet map ---
+    const map = L.map('map', { worldCopyJump: true }).setView([20,0], 2);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© OpenStreetMap contributors' }).addTo(map);
+
+    let trueMarker = null; // for debugging if you want to show true location
+    let guessMarker = null;
+
+    // UI refs
+    const placeNameEl = document.getElementById('place-name');
+    const hintEl = document.getElementById('hint');
+    const mediaArea = document.getElementById('media-area');
+    const scoreEl = document.getElementById('score');
+    const feedbackEl = document.getElementById('feedback');
+
+    function updateScore() { scoreEl.textContent = `Score: ${score}` }
+
+    function showFeedback(text, ok=true){ feedbackEl.style.display='block'; feedbackEl.style.background = ok ? 'rgba(235,255,235,0.95)' : 'rgba(255,235,235,0.95)'; feedbackEl.textContent = text; setTimeout(()=>feedbackEl.style.display='none', 1400) }
+
+    function pickRandomIndex(){
+      if(usedIndexes.size >= LOCS.length) usedIndexes.clear();
+      let idx;
+      do { idx = Math.floor(Math.random()*LOCS.length) } while(usedIndexes.has(idx) && usedIndexes.size < LOCS.length);
+      usedIndexes.add(idx); return idx;
+    }
+
+    function loadQuestion(idx){
+      currentIndex = idx;
+      const item = LOCS[idx];
+      placeNameEl.textContent = item.name || '--';
+      hintEl.textContent = item.hint || '';
+
+      // media
+      mediaArea.innerHTML = '';
+      if(item.media){
+        if(item.mediaType === 'video'){
+          const v = document.createElement('video'); v.src = item.media; v.controls = true; v.setAttribute('playsinline',''); mediaArea.appendChild(v);
+        } else {
+          const img = document.createElement('img'); img.src = item.media; img.alt = item.name; mediaArea.appendChild(img);
+        }
+      }
+
+      // optionally hide the real location for players (don't add trueMarker)
+      if(trueMarker){ map.removeLayer(trueMarker); trueMarker=null }
+
+      // center map a bit around the item (not revealing too much) — small pan/zoom
+      map.setView([item.lat, item.lon], 3);
+
+      // clear previous guess
+      if(guessMarker){ map.removeLayer(guessMarker); guessMarker = null }
+    }
+
+    function deg2rad(deg){ return deg * Math.PI/180 }
+    function haversine(lat1, lon1, lat2, lon2){
+      const R = 6371000; // meters
+      const dLat = deg2rad(lat2-lat1);
+      const dLon = deg2rad(lon2-lon1);
+      const a = Math.sin(dLat/2)*Math.sin(dLat/2) + Math.cos(deg2rad(lat1))*Math.cos(deg2rad(lat2))*Math.sin(dLon/2)*Math.sin(dLon/2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+      return R * c;
+    }
+
+    map.on('click', function(e){
+      if(currentIndex === -1) return;
+      const { lat, lng } = e.latlng;
+      const item = LOCS[currentIndex];
+
+      // place/replace guess marker
+      if(guessMarker) map.removeLayer(guessMarker);
+      guessMarker = L.marker([lat,lng], { title: 'Jouw gok' }).addTo(map);
+
+      const dist = Math.round(haversine(lat, lng, item.lat, item.lon));
+
+      // show circle and line to true if you want
+      const poly = L.polyline([[lat,lng],[item.lat, item.lon]]).addTo(map);
+      setTimeout(()=> map.removeLayer(poly), 3000);
+
+      if(dist <= ACCEPT_RADIUS_METERS){
+        score++;
+        updateScore();
+        showFeedback(`Correct! Afstand ${dist} m — +1 punt`, true);
+        // automatisch naar volgende vraag
+        setTimeout(()=> loadQuestion(pickRandomIndex()), 900);
+      } else {
+        showFeedback(`Bijna — afstand ${dist} m`, false);
+      }
+    });
+
+    // buttons
+    document.getElementById('skipBtn').addEventListener('click', ()=> loadQuestion(pickRandomIndex()));
+    document.getElementById('resetBtn').addEventListener('click', ()=>{ score=0; updateScore(); usedIndexes.clear(); loadQuestion(pickRandomIndex()); });
+
+    // start
+    updateScore();
+    loadQuestion(pickRandomIndex());
+
+    // Export (optioneel) voor debug / integratie
+    window.EXPLO_GAME = { loadQuestion, LOCS };
+  </script>
+</body>
+</html>
