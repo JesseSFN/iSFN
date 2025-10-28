@@ -1,4 +1,4 @@
-function getLOCS() {
+function LOCS() {
   return (typeof locations !== 'undefined' && Array.isArray(locations)) ? locations : [];
 }
 
