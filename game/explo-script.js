@@ -1,4 +1,6 @@
-function LOCS() {
+const LOCS = (typeof locations !== 'undefined' && Array.isArray(locations)) ? locations : [];
+
+function getLOCS() {
   return (typeof locations !== 'undefined' && Array.isArray(locations)) ? locations : [];
 }
 
@@ -145,6 +147,10 @@ document.getElementById('resetBtn').addEventListener('click', () => {
   updateScore();
   usedIndexes.clear(); // zet alles op nul
   loadQuestion(pickRandomIndex());
+});
+
+document.getElementById('back-button').addEventListener('click', () => {
+  window.location.href = '../keuze-menu.html';
 });
 
 // Initialize
