@@ -19,7 +19,7 @@ header {
   align-items: center;
   justify-content: center;
   background: var(--panel-bg);
-  padding: 10px 0;
+  padding: 0px 20;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
   position: relative;
   z-index: 1000;
@@ -99,9 +99,10 @@ header img {
 
 .score {
   font-weight: 700;
+  margin-left: auto;
 }
 
-confirmbtn {
+.confirmbtn {
   background: rgb(1, 158, 1);
   color: #ffffff;
   border: none;
@@ -109,7 +110,7 @@ confirmbtn {
   border-radius: 8px;
   cursor: pointer;
 }
-resetbtn {
+.resetbtn {
   background: rgb(185, 1, 1);
   color: #ffffff;
   border: none;
@@ -136,7 +137,7 @@ button.secondary {
   z-index: 2000;
 }
 
-.back-btn{
+/*.back-btn{
   position: absolute;
   top: 10px;
   font-size: 18px;
@@ -147,6 +148,7 @@ button.secondary {
   font-weight: 600;
   font-family: "Noto Sans", sans-serif;
 }
+*/
 
 @media (max-width: 880px) {
   .app {
