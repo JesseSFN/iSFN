@@ -325,7 +325,7 @@ const locations = [
       },
       {
         name: "Bleek",
-        hint: "Toen sterren speren wierpen neer, En hemel drenkte in tranenmeer, Glimlachte hij om wat hij schiep?Maakte hij, die ’t Lam vormgaf, ook die?",
+        hint: "Toen sterren speren wierpen neer, En hemel drenkte in tranenmeer, Glimlachte hij om wat hij schiep? Maakte hij, die ’t Lam vormgaf, ook die?",
         ans: "William Blake - Soho London",
         media: "",
         lat: 51.5136782,

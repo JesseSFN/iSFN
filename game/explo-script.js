@@ -129,12 +129,26 @@ document.getElementById('confirmBtn').addEventListener('click', () => {
   }
 });
 
+// Score ophalen uit localStorage (als die bestaat)
+let score = parseInt(localStorage.getItem('exploScore')) || 0;
+
+// ...
+
+function updateScore() {
+  scoreEl.textContent = `Score: ${score}`;
+  localStorage.setItem('exploScore', score); // ✅ bij elke update opslaan
+}
+
+// ...
+
 document.getElementById('resetBtn').addEventListener('click', () => {
   score = 0;
+  localStorage.removeItem('exploScore'); // ✅ reset ook opslag
   updateScore();
   usedIndexes.clear();
   loadQuestion(pickRandomIndex());
 });
+
 
 // ✅ Start het spel
 updateScore();
