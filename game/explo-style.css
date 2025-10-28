@@ -19,7 +19,7 @@ header {
   align-items: center;
   justify-content: center;
   background: var(--panel-bg);
-  padding: 0px 20;
+  padding: 0px 20px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
   position: relative;
   z-index: 1000;
