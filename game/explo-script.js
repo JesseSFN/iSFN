@@ -147,10 +147,6 @@ document.getElementById('resetBtn').addEventListener('click', () => {
   loadQuestion(pickRandomIndex());
 });
 
-document.getElementById('back-button').addEventListener('click', () => {
-  window.location.href = '../keuze-menu.html';
-});
-
 // Initialize
 updateScore();
 if (LOCS.length > 0) loadQuestion(pickRandomIndex());
