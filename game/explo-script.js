@@ -1,8 +1,5 @@
+// ✅ Maak LOCS een constante array, niet een functie
 const LOCS = (typeof locations !== 'undefined' && Array.isArray(locations)) ? locations : [];
-
-function getLOCS() {
-  return (typeof locations !== 'undefined' && Array.isArray(locations)) ? locations : [];
-}
 
 let score = 0;
 let currentIndex = -1;
@@ -34,16 +31,10 @@ function showFeedbackCenter(text, good) {
   setTimeout(() => feedbackCenter.style.display = 'none', 1000);
 }
 
-function pickNextIndex() {
-  let idx = currentIndex + 1;
-  if (idx >= LOCS.length) idx = 0;
-  return idx;
-}
-
 function pickRandomIndex() {
   if (LOCS.length === 0) return -1;
 
-  // Als alle locaties al gebruikt zijn, reset de set
+  // Reset lijst als alles gebruikt is
   if (usedIndexes.size >= LOCS.length) usedIndexes.clear();
 
   let idx;
@@ -54,7 +45,6 @@ function pickRandomIndex() {
   usedIndexes.add(idx);
   return idx;
 }
-
 
 function loadQuestion(idx) {
   currentIndex = idx;
@@ -86,6 +76,7 @@ function loadQuestion(idx) {
     }
   }
 
+  // Altijd terug naar het midden (wereldzicht)
   map.setView([20, 0], 2);
   if (guessMarker) {
     map.removeLayer(guessMarker);
@@ -103,7 +94,7 @@ function haversine(lat1, lon1, lat2, lon2) {
   const dLat = deg2rad(lat2 - lat1);
   const dLon = deg2rad(lon2 - lon1);
   const a = Math.sin(dLat / 2) ** 2 +
-            Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+            Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
             Math.sin(dLon / 2) ** 2;
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return R * c;
@@ -117,43 +108,34 @@ map.on('click', function(e) {
 
 document.getElementById('confirmBtn').addEventListener('click', () => {
   if (!selectedCoords || currentIndex === -1) return;
+
   const { lat, lng } = selectedCoords;
   const item = LOCS[currentIndex];
   const dist = Math.round(haversine(lat, lng, item.lat, item.lng));
   const radius = (item.radius ? item.radius * 1000 : 20000);
 
-  const correctSound = new Audio('../Sounds/Correct.mp3'); 
+  const correctSound = new Audio('../Sounds/Correct.mp3');
   const wrongSound = new Audio('../Sounds/Incorrect.mp3');
 
-if (dist <= radius) {
+  if (dist <= radius) {
     score++;
     updateScore();
     showFeedbackCenter('GOED', true);
-
-    // Play correct sound
     correctSound.play();
-
     setTimeout(() => loadQuestion(pickRandomIndex()), 1000);
-} else {
+  } else {
     showFeedbackCenter('FOUT', false);
-
-    // Play wrong sound
     wrongSound.play();
-}
+  }
 });
 
 document.getElementById('resetBtn').addEventListener('click', () => {
   score = 0;
   updateScore();
-  usedIndexes.clear(); // zet alles op nul
+  usedIndexes.clear();
   loadQuestion(pickRandomIndex());
 });
 
-document.getElementById('back-button').addEventListener('click', () => {
-  window.location.href = '../keuze-menu.html';
-});
-
-// Initialize
+// ✅ Start het spel
 updateScore();
 if (LOCS.length > 0) loadQuestion(pickRandomIndex());
-
