@@ -117,7 +117,7 @@ document.getElementById('confirmBtn').addEventListener('click', () => {
   const dist = Math.round(haversine(lat, lng, item.lat, item.lng));
   const radius = (item.radius ? item.radius * 1000 : 20000);
 
-  const correctSound = new Audio('../Sounds/Correct.mp3'); // Replace with your file path
+  const correctSound = new Audio('../Sounds/Correct.mp3'); 
   const wrongSound = new Audio('../Sounds/Incorrect.mp3');
 
 if (dist <= radius) {
