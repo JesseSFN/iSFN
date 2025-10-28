@@ -37,16 +37,22 @@ document.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => feedbackCenter.style.display = 'none', 1000);
   }
 
-  function pickRandomIndex() {
-    if (LOCS.length === 0) return -1;
-    if (usedIndexes.size >= LOCS.length) usedIndexes.clear();
+function pickRandomIndex() {
+  if (LOCS.length === 0) return -1;
 
-    let idx;
-    do { idx = Math.floor(Math.random() * LOCS.length); }
-    while (usedIndexes.has(idx));
-    usedIndexes.add(idx);
-    return idx;
+  // ✅ Als alle vragen gedaan zijn → pop-up tonen
+  if (usedIndexes.size >= LOCS.length) {
+    alert("Yo, je hebt alles gedaan, doei!");
+    usedIndexes.clear(); // eventueel opnieuw beginnen na de melding
   }
+
+  let idx;
+  do { idx = Math.floor(Math.random() * LOCS.length); }
+  while (usedIndexes.has(idx));
+  usedIndexes.add(idx);
+  return idx;
+}
+
 
   function loadQuestion(idx) {
     if (idx < 0 || idx >= LOCS.length) return;
