@@ -1,7 +1,9 @@
-const LOCS = (typeof locations !== 'undefined' && Array.isArray(locations)) ? locations : [];
+function getLOCS() {
+  return (typeof locations !== 'undefined' && Array.isArray(locations)) ? locations : [];
+}
 
 let score = 0;
-let currentIndex = 1;
+let currentIndex = -1;
 let usedIndexes = new Set();
 
 const map = L.map('map', { worldCopyJump: true }).setView([20, 0], 2);
