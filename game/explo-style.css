@@ -102,7 +102,7 @@ header img {
   margin-left: auto;
 }
 
-confirmbtn {
+.confirmbtn {
   background: rgb(1, 158, 1);
   color: #ffffff;
   border: none;
@@ -110,7 +110,8 @@ confirmbtn {
   border-radius: 8px;
   cursor: pointer;
 }
-resetbtn {
+
+.resetbtn {
   background: rgb(185, 1, 1);
   color: #ffffff;
   border: none;
