@@ -332,4 +332,13 @@ const locations = [
         lng: -0.1347802,
         radius: 1 // ongeveer 1 km
       },
+      {
+        name: "Klinkt als muziek voor mijn oren",
+        hint: "",
+        ans: "ALABAMA",
+        media: "https://jessesfn.github.io/iSFN/media-vragen/KAMVMO",
+        lat: 32.9598909,
+        lng: -86.7617503,
+        radius: 400 // ongeveer 400 km
+      },
 ];
