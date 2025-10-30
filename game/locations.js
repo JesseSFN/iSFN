@@ -336,7 +336,7 @@ const locations = [
         name: "Klinkt als muziek voor mijn oren",
         hint: "",
         ans: "ALABAMA",
-        media: "https://jessesfn.github.io/iSFN/media-vragen/KAMVMO",
+        media: "https://jessesfn.github.io/iSFN/media-vragen/KAMVMO.png",
         lat: 32.9598909,
         lng: -86.7617503,
         radius: 400 // ongeveer 400 km
