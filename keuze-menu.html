@@ -6,108 +6,122 @@
   <title>iSFN</title>
   <link rel="icon" href="/iSFN/Images/iSFN_favicon.png" type="image/png" />
   <style>
-
-    body {
-      margin: 0;
-      padding: 0;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      background: linear-gradient(135deg, #4db6ac, #b2dfdb);
-      font-family: "Noto Sans", sans-serif;
-    }
-
-    .logo {
-      width: 350px;
-      height: auto;
-      margin-bottom: 40px;
-      user-select: none;
-    }
-        ul {
-    padding-left: 0;
-    margin-left: 0;
-   }
-
-    .button-container {
-      display: flex;           /* Knoppen naast elkaar */
-      gap: 20px;               /* Ruimte tussen knoppen */
-      justify-content: center; /* Horizontaal centreren */
-    }
-
-      .explo-button, .welp-button, .scout-button, .bever-button {
-      color: white;
-      border: none;
-      border-radius: 12px;
-      padding: 15px 40px;
-      font-size: 22px;
-      font-weight: 600;
-      cursor: pointer;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      transition: all 0.3s ease;
-      font-family: Noto Sans;
-    }
-
-    .explo-button {
-      background-color: #922B3E;
-    }
-
-    .explo-button:hover {
-      background-color: #6b1f2d;
-      transform: scale(1.05);
-    }
-
-    .welp-button {
-      background-color: #317F43;
-    }
-
-    .welp-button:hover {
-      background-color: #266134;
-      transform: scale(1.05);
-    }
-    .scout-button {
-      background-color: #9E9764;
-    }
-    .scout-button:hover {
-      background-color: #7c774f;
-      transform: scale(1.05);
-    }
-    .bever-button {
-      background-color: #d53032;
-    }
-    .bever-button:hover {
-      background-color: #811f20;
-      transform: scale(1.05);
-    }
-
-     /* Mobiele weergave */
-    @media (max-width: 768px) {
-  .button-container {
-    flex-direction: column;     /* Onder elkaar */
-    align-items: center;        /* Centreert de knoppen horizontaal */
-    justify-content: center;    /* Centreert ze verticaal indien nodig */
-    gap: 15px;
-    width: 100%;
+  :root {
+    --bg: #121212;
+    --panel-bg: #1e1e1e;
+    --text: #ffffff;
+    --hint: #bbbbbb;
   }
 
-  .explo-button, .welp-button, .scout-button, .bever-button {
-    max-width: 300px;
-    text-align: center;         /* Tekst netjes gecentreerd */
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, var(--bg) 0%, var(--panel-bg) 100%);
+    font-family: "Noto Sans", sans-serif;
+    color: var(--text);
   }
 
   .logo {
-    width: 250px;
-    margin-bottom: 30px;
+    width: 350px;
+    height: auto;
+    margin-bottom: 40px;
+    user-select: none;
+    filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.6));
   }
-}
-  </style>
-</head>
-<body>
+
+  ul {
+    padding-left: 0;
+    margin-left: 0;
+  }
+
+  .button-container {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+  }
+
+  /* --- Knoppen blijven zoals ze waren --- */
+
+  .explo-button, .welp-button, .scout-button, .bever-button {
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 15px 40px;
+    font-size: 22px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    font-family: "Noto Sans", sans-serif;
+  }
+
+  .explo-button {
+    background-color: #922B3E;
+  }
+
+  .explo-button:hover {
+    background-color: #6b1f2d;
+    transform: scale(1.05);
+  }
+
+  .welp-button {
+    background-color: #317F43;
+  }
+
+  .welp-button:hover {
+    background-color: #266134;
+    transform: scale(1.05);
+  }
+
+  .scout-button {
+    background-color: #9E9764;
+  }
+
+  .scout-button:hover {
+    background-color: #7c774f;
+    transform: scale(1.05);
+  }
+
+  .bever-button {
+    background-color: #d53032;
+  }
+
+  .bever-button:hover {
+    background-color: #811f20;
+    transform: scale(1.05);
+  }
+
+  /* --- Mobiele weergave --- */
+  @media (max-width: 768px) {
+    .button-container {
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      width: 100%;
+    }
+
+    .explo-button, .welp-button, .scout-button, .bever-button {
+      max-width: 300px;
+      text-align: center;
+    }
+
+    .logo {
+      width: 250px;
+      margin-bottom: 30px;
+    }
+  }
+</style>
+
 
   <!-- Logo -->
   <a href="index.html">
-  <img src="Images/iSFN_Logo_V5_Black.svg" alt="iSFN Logo" class="logo" style="width:350px; height:auto;">
+  <img src="Images/iSFN_Logo_V5_White.svg" alt="iSFN Logo" class="logo" style="width:350px; height:auto;">
 </a>
 
 

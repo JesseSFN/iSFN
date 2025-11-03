@@ -1,3 +1,13 @@
+:root {
+  --bg: #121212;
+  --panel-bg: #1e1e1e;
+  --text: #ffffff;
+  --hint: #bbbbbb;
+  --accent: #0b74de;
+  --button-bg: #0b74de;
+  --button-hover: #095bb0;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -6,8 +16,9 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #4db6ac, #b2dfdb);
+  background: linear-gradient(135deg, var(--bg) 0%, var(--panel-bg) 100%);
   font-family: "Noto Sans", sans-serif;
+  color: var(--text);
 }
 
 ul {
@@ -20,31 +31,33 @@ ul {
   height: auto;
   margin-bottom: 40px;
   user-select: none;
+  filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.6));
 }
 
 .start-button {
-  background-color: #00796b;
-  color: white;
+  background-color: var(--button-bg);
+  color: var(--text);
   border: none;
   border-radius: 12px;
   padding: 15px 40px;
   font-size: 22px;
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
   transition: all 0.3s ease;
-  font-family: Noto Sans;
+  font-family: "Noto Sans", sans-serif;
 }
 
 .start-button:hover {
-  background-color: #004d40;
+  background-color: var(--button-hover);
   transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(11, 116, 222, 0.4);
 }
 
 footer {
   position: absolute;
   bottom: 15px;
   font-size: 14px;
-  color: #333;
+  color: var(--hint);
   text-align: center;
 }
