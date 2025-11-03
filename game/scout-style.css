@@ -14,15 +14,6 @@ html, body {
   color: var(--text);
 }
 
-.lamp-hint {
-    display: none;
-    margin-top: 10px;
-    background-color: #ffffcc;
-    padding: 5px 10px;
-    border-radius: 5px;
-}
-
-
 header {
   display: flex;
   align-items: center;
