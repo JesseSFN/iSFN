@@ -1,0 +1,236 @@
+:root {
+  --bg: #121212;
+  --panel-bg: #1e1e1e;
+  --text: #ffffff;
+  --hint: #bbbbbb;
+  --accent: #0b74de;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: var(--bg);
+  color: var(--text);
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--panel-bg);
+  padding: 0px 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  position: relative;
+  z-index: 1000;
+}
+
+header img {
+  height: 40px;
+}
+
+.app {
+  display: flex;
+  height: calc(100vh - 60px);
+  gap: 12px;
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+#map {
+  flex: 1 1 60%;
+  min-width: 320px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+}
+
+.panel {
+  flex: 0 0 360px;
+  background: var(--panel-bg);
+  border-radius: 12px;
+  padding: 16px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+}
+
+.place-name {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-weight: 700;
+  font-size: 18px;
+  text-align: right;
+}
+
+.hint {
+  margin-top: 60px;
+  margin-bottom: 12px;
+  align-self: flex-end;
+  max-width: 100%;
+  width: 100%;
+  text-align: right;
+  font-size: 15px;
+  color: var(--hint);
+}
+
+.media {
+  margin-top: 8px;
+  align-self: stretch;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.media img, .media video, .media audio {
+  max-width: 100%;
+  max-height: 340px;
+  border-radius: 8px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+}
+
+.footer {
+  margin-top: auto;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.score {
+  font-weight: 700;
+  margin-left: auto;
+}
+
+confirmbtn {
+  background: rgb(1, 158, 1);
+  color: #ffffff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+resetbtn {
+  background: #b90101;
+  color: #ffffff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+button.secondary {
+  background: #2a2a2a;
+  color: var(--accent);
+}
+
+.feedback-center {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 500px;
+  font-weight: 900;
+  color: #fff;
+  text-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+  display: none;
+  z-index: 2000;
+}
+
+@media (max-width: 880px) {
+  .app {
+    flex-direction: column;
+  }
+  .panel {
+    order: 2;
+    width: 100%;
+    flex-basis: auto;
+  }
+  #map {
+    order: 1;
+    height: 50vh;
+  }
+  .place-name {
+    text-align: left;
+    right: unset;
+    left: 12px;
+  }
+  .hint {
+    text-align: left;
+  }
+}
+
+/* 🌙 Donkere einde-popup stijl */
+#endPopup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  backdrop-filter: blur(5px);
+  animation: fadeIn 0.6s ease forwards;
+}
+
+#endPopupContent {
+  background: #1c1c1c;
+  color: #f1f1f1;
+  padding: 3rem 2rem;
+  border-radius: 1.5rem;
+  text-align: center;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+  transform: scale(0.9);
+  animation: popIn 0.4s ease forwards;
+}
+
+#endPopupContent h2 {
+  font-size: 2.5rem;
+  color: hsl(156, 100%, 50%);
+  margin-bottom: 1.2rem;
+  letter-spacing: 1px;
+}
+
+#endPopupContent p {
+  font-size: 1.1rem;
+  margin: 0.5rem 0;
+}
+
+#finalScore {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-top: 1rem;
+  color: #00ff00;
+}
+
+#restartBtn {
+  background: #b70101;
+  border: none;
+  color: #fff;
+  padding: 0.8rem 2rem;
+  border-radius: 0.8rem;
+  cursor: pointer;
+  font-size: 1.1rem;
+  margin-top: 1.5rem;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+#restartBtn:hover {
+  background: #8d0101;
+  transform: scale(1.05);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+
