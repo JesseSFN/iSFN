@@ -161,44 +161,76 @@ button.secondary {
   }
 }
 
-/* ✅ Einde-popup stijl */
+/* 🌙 Donkere einde-popup stijl */
 #endPopup {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.75);
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
   display: none;
   justify-content: center;
   align-items: center;
   z-index: 9999;
+  backdrop-filter: blur(5px);
+  animation: fadeIn 0.6s ease forwards;
 }
 
 #endPopupContent {
-  background: white;
-  padding: 2rem;
-  border-radius: 1rem;
+  background: #1c1c1c;
+  color: #f1f1f1;
+  padding: 3rem 2rem;
+  border-radius: 1.5rem;
   text-align: center;
-  max-width: 400px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+  transform: scale(0.9);
+  animation: popIn 0.4s ease forwards;
 }
 
 #endPopupContent h2 {
-  margin-bottom: 1rem;
+  font-size: 2.5rem;
+  color: #00ff99;
+  margin-bottom: 1.2rem;
+  letter-spacing: 1px;
 }
 
-#endPopupContent button {
-  background: #007bff;
+#endPopupContent p {
+  font-size: 1.1rem;
+  margin: 0.5rem 0;
+}
+
+#finalScore {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-top: 1rem;
+  color: #ffd966;
+}
+
+#restartBtn {
+  background: #00bcd4;
   border: none;
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
+  color: #fff;
+  padding: 0.8rem 2rem;
+  border-radius: 0.8rem;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 1.1rem;
+  margin-top: 1.5rem;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
-#endPopupContent button:hover {
-  background: #0056b3;
+#restartBtn:hover {
+  background: #0097a7;
+  transform: scale(1.05);
 }
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
 
