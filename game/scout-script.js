@@ -141,6 +141,18 @@ function pickRandomIndex() {
     loadQuestion(pickRandomIndex());
   });
 
+  const hintLamp = document.getElementById('hintLamp');
+const lampHintText = document.getElementById('lampHintText');
+
+hintLamp.addEventListener('click', () => {
+    if (lampHintText.style.display === 'none' || lampHintText.style.display === '') {
+        lampHintText.style.display = 'block';
+    } else {
+        lampHintText.style.display = 'none';
+    }
+});
+
+
   // ✅ Start
   updateScore();
   if (LOCS.length > 0) loadQuestion(pickRandomIndex());
