@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function showEndPopup() {
-    finalScoreEl.textContent = `Je eindscore is ${score}`;
+    finalScoreEl.textContent = `${score}`;
     endPopup.style.display = 'flex';
   }
 
