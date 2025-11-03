@@ -31,12 +31,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const endPopup = document.createElement('div');
   endPopup.id = 'endPopup';
   endPopup.innerHTML = `
-    <div id="endPopupContent">
-      <h2>🎉 Je bent klaar!</h2>
-      <p id="finalScore"></p>
-      <button id="restartBtn">Opnieuw spelen</button>
-    </div>
-  `;
+  <div id="endPopupContent">
+    <h2>🎉 Goed Gedaan!</h2>
+    <p>Je hebt een score van:</p>
+    <p id="finalScore"></p>
+    <p>📸 Als je wilt, maak hier een foto van als herinnering!</p>
+    <button id="restartBtn">Reset</button>
+  </div>
+`;
   document.body.appendChild(endPopup);
 
   // ✅ Popup-elementen
