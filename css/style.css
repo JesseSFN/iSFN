@@ -1,0 +1,66 @@
+:root {
+  --bg: #121212;
+  --panel-bg: #1e1e1e;
+  --text: #ffffff;
+  --hint: #bbbbbb;
+  --accent: #0b74de;
+  --accent-hover: #095bb0;
+  --success: #2e7d32;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Noto Sans", sans-serif;
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, var(--bg) 0%, var(--panel-bg) 100%);
+  height: 100vh;
+}
+
+ul {
+  padding-left: 0;
+  margin-left: 0;
+}
+
+.logo {
+  width: 220px;
+  height: auto;
+  margin-bottom: 40px;
+  user-select: none;
+  filter: drop-shadow(0 0 8px rgba(0,0,0,0.6));
+}
+
+button {
+  font-family: "Noto Sans", sans-serif;
+  border: none;
+  border-radius: 12px;
+  padding: 15px 40px;
+  font-size: 22px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  transition: all 0.3s ease;
+}
+
+.start-button {
+  background-color: var(--accent);
+  color: var(--text);
+}
+
+.start-button:hover {
+  background-color: var(--accent-hover);
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(11, 116, 222, 0.4);
+}
+
+footer {
+  position: absolute;
+  bottom: 15px;
+  font-size: 14px;
+  color: var(--hint);
+  text-align: center;
+}
