@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
   endPopup.id = 'endPopup';
   endPopup.innerHTML = `
   <div id="endPopupContent">
-    <h2>Goed Gedaan!</h2>
+    <h2> Goed Gedaan!</h2>
     <p>Je hebt een score van:</p>
     <p id="finalScore"></p>
     <p>Roep een Leiding om hier een foto van te maken!</p>

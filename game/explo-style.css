@@ -189,7 +189,7 @@ button.secondary {
 
 #endPopupContent h2 {
   font-size: 2.5rem;
-  color: #00ff99;
+  color: hsl(156, 100%, 50%);
   margin-bottom: 1.2rem;
   letter-spacing: 1px;
 }
@@ -207,7 +207,7 @@ button.secondary {
 }
 
 #restartBtn {
-  background: #b90101;
+  background: #b70101;
   border: none;
   color: #fff;
   padding: 0.8rem 2rem;
@@ -219,7 +219,7 @@ button.secondary {
 }
 
 #restartBtn:hover {
-  background: #0097a7;
+  background: #8d0101;
   transform: scale(1.05);
 }
 
