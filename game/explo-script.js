@@ -8,7 +8,6 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentIndex = parseInt(localStorage.getItem('currentIndex'));
   if (isNaN(currentIndex)) currentIndex = -1;
 
-  // Set van gebruikte indexes uit localStorage
   let usedIndexes = new Set(JSON.parse(localStorage.getItem('usedIndexes') || '[]'));
 
   // ✅ Map-initialisatie
@@ -28,6 +27,22 @@ document.addEventListener("DOMContentLoaded", () => {
   const scoreEl = document.getElementById('score');
   const feedbackCenter = document.getElementById('feedbackCenter');
 
+  // ✅ Maak einde-popup element (eenmalig)
+  const endPopup = document.createElement('div');
+  endPopup.id = 'endPopup';
+  endPopup.innerHTML = `
+    <div id="endPopupContent">
+      <h2>🎉 Je bent klaar!</h2>
+      <p id="finalScore"></p>
+      <button id="restartBtn">Opnieuw spelen</button>
+    </div>
+  `;
+  document.body.appendChild(endPopup);
+
+  // ✅ Popup-elementen
+  const finalScoreEl = endPopup.querySelector('#finalScore');
+  const restartBtn = endPopup.querySelector('#restartBtn');
+
   function updateScore() {
     scoreEl.textContent = `Score: ${score}`;
     localStorage.setItem('exploScore', score);
@@ -45,19 +60,42 @@ document.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => feedbackCenter.style.display = 'none', 1000);
   }
 
+  function showEndPopup() {
+    finalScoreEl.textContent = `Je eindscore is ${score} van de ${LOCS.length}`;
+    endPopup.style.display = 'flex';
+  }
+
+  function hideEndPopup() {
+    endPopup.style.display = 'none';
+  }
+
+  function resetAll() {
+    score = 0;
+    updateScore();
+    usedIndexes.clear();
+    currentIndex = -1;
+    localStorage.removeItem('exploScore');
+    localStorage.removeItem('usedIndexes');
+    localStorage.removeItem('currentIndex');
+    hideEndPopup();
+    loadQuestion(pickRandomIndex());
+  }
+
+  restartBtn.addEventListener('click', resetAll);
+
   function pickRandomIndex() {
     if (LOCS.length === 0) return -1;
 
-    // ✅ Als alle vragen gedaan zijn → pop-up tonen
+    // ✅ Alle vragen gedaan → popup tonen en stoppen
     if (usedIndexes.size >= LOCS.length) {
-      alert("Yo, je hebt alles gedaan, doei!");
-      usedIndexes.clear();
-      localStorage.removeItem('usedIndexes');
+      showEndPopup();
+      return -1;
     }
 
     let idx;
     do { idx = Math.floor(Math.random() * LOCS.length); }
     while (usedIndexes.has(idx));
+
     usedIndexes.add(idx);
     saveProgress();
     return idx;
@@ -140,7 +178,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       setTimeout(() => {
         const newIdx = pickRandomIndex();
-        loadQuestion(newIdx);
+        if (newIdx !== -1) loadQuestion(newIdx);
       }, 1000);
     } else {
       showFeedbackCenter('FOUT', false);
@@ -148,22 +186,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  document.getElementById('resetBtn').addEventListener('click', () => {
-    score = 0;
-    updateScore();
-    usedIndexes.clear();
-    currentIndex = -1;
-    localStorage.removeItem('exploScore');
-    localStorage.removeItem('usedIndexes');
-    localStorage.removeItem('currentIndex');
-    loadQuestion(pickRandomIndex());
-  });
+  document.getElementById('resetBtn').addEventListener('click', resetAll);
 
   // ✅ Start
   updateScore();
   if (LOCS.length > 0) {
     if (currentIndex !== -1) {
-      loadQuestion(currentIndex); // Huidige vraag terughalen
+      loadQuestion(currentIndex);
     } else {
       loadQuestion(pickRandomIndex());
     }
