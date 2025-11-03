@@ -3,13 +3,10 @@ document.addEventListener("DOMContentLoaded", () => {
   // ✅ Laad locaties
   const LOCS = (typeof locations !== 'undefined' && Array.isArray(locations)) ? locations : [];
 
-  // ✅ Herstel score, huidige vraag, en gebruikte vragen uit localStorage
+  // ✅ Herstel score uit localStorage
   let score = parseInt(localStorage.getItem('exploScore')) || 0;
-  let currentIndex = parseInt(localStorage.getItem('currentIndex'));
-  if (isNaN(currentIndex)) currentIndex = -1;
-
-  // Set van gebruikte indexes uit localStorage
-  let usedIndexes = new Set(JSON.parse(localStorage.getItem('usedIndexes') || '[]'));
+  let currentIndex = -1;
+  let usedIndexes = new Set();
 
   // ✅ Map-initialisatie
   const map = L.map('map', { worldCopyJump: true }).setView([20, 0], 2);
@@ -33,11 +30,6 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem('exploScore', score);
   }
 
-  function saveProgress() {
-    localStorage.setItem('usedIndexes', JSON.stringify(Array.from(usedIndexes)));
-    localStorage.setItem('currentIndex', currentIndex);
-  }
-
   function showFeedbackCenter(text, good) {
     feedbackCenter.textContent = text;
     feedbackCenter.style.display = 'block';
@@ -45,29 +37,26 @@ document.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => feedbackCenter.style.display = 'none', 1000);
   }
 
-  function pickRandomIndex() {
-    if (LOCS.length === 0) return -1;
+function pickRandomIndex() {
+  if (LOCS.length === 0) return -1;
 
-    // ✅ Als alle vragen gedaan zijn → pop-up tonen
-    if (usedIndexes.size >= LOCS.length) {
-      alert("Yo, je hebt alles gedaan, doei!");
-      usedIndexes.clear();
-      localStorage.removeItem('usedIndexes');
-    }
-
-    let idx;
-    do { idx = Math.floor(Math.random() * LOCS.length); }
-    while (usedIndexes.has(idx));
-    usedIndexes.add(idx);
-    saveProgress();
-    return idx;
+  // ✅ Als alle vragen gedaan zijn → pop-up tonen
+  if (usedIndexes.size >= LOCS.length) {
+    alert("Yo, je hebt alles gedaan, doei!");
+    usedIndexes.clear(); // eventueel opnieuw beginnen na de melding
   }
+
+  let idx;
+  do { idx = Math.floor(Math.random() * LOCS.length); }
+  while (usedIndexes.has(idx));
+  usedIndexes.add(idx);
+  return idx;
+}
+
 
   function loadQuestion(idx) {
     if (idx < 0 || idx >= LOCS.length) return;
     currentIndex = idx;
-    saveProgress();
-
     const item = LOCS[idx];
 
     placeNameEl.textContent = item.name || '--';
@@ -137,11 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
       updateScore();
       showFeedbackCenter('GOED', true);
       correctSound.play();
-
-      setTimeout(() => {
-        const newIdx = pickRandomIndex();
-        loadQuestion(newIdx);
-      }, 1000);
+      setTimeout(() => loadQuestion(pickRandomIndex()), 1000);
     } else {
       showFeedbackCenter('FOUT', false);
       wrongSound.play();
@@ -150,22 +135,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById('resetBtn').addEventListener('click', () => {
     score = 0;
+    localStorage.removeItem('exploScore');
     updateScore();
     usedIndexes.clear();
-    currentIndex = -1;
-    localStorage.removeItem('exploScore');
-    localStorage.removeItem('usedIndexes');
-    localStorage.removeItem('currentIndex');
     loadQuestion(pickRandomIndex());
   });
 
   // ✅ Start
   updateScore();
-  if (LOCS.length > 0) {
-    if (currentIndex !== -1) {
-      loadQuestion(currentIndex); // Huidige vraag terughalen
-    } else {
-      loadQuestion(pickRandomIndex());
-    }
-  }
+  if (LOCS.length > 0) loadQuestion(pickRandomIndex());
 });
