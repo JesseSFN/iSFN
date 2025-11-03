@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>iSFN - Explorers</title>
+  <link rel="icon" href="/iSFN/Images/iSFN_favicon.png" type="image/png" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="explo-style.css" />
+</head>
+<body>
+  <header>
+    <img src="../Images/iSFN_Logo_V5_White.svg" alt="iSFN Logo" />
+    <div class="score" id="score">Score: 0</div>
+  </header>
+  <div class="app">
+    <div id="map"></div>
+
+    <div class="panel">
+      <div class="place-name" id="place-name">--</div>
+      <div class="hint" id="hint">als je dit ziet moet even op de reset knop drukken want Jesse kan niet zo goed programmeren.</div>
+      <div class="media" id="media-area"></div>
+
+      <div class="footer">
+        <div style="flex:1"></div>
+        <confirmbtn id="confirmBtn">Bevestig</confirmbtn>
+        <resetbtn id="resetBtn">Reset</resetbtn>
+      </div>
+    </div>
+  </div>
+
+  <div class="feedback-center" id="feedbackCenter"></div>
+
+  
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="locations.js"></script>
+  <script src="cheat-loc.js"></script>
+  <script type="module" src="timer.js"></script>
+</body>
+</html>
