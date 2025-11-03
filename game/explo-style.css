@@ -112,7 +112,7 @@ confirmbtn {
 }
 
 resetbtn {
-  background: rgb(185, 1, 1);
+  background: #b90101;
   color: #ffffff;
   border: none;
   padding: 8px 12px;
@@ -203,11 +203,11 @@ button.secondary {
   font-size: 1.4rem;
   font-weight: bold;
   margin-top: 1rem;
-  color: #ffd966;
+  color: #00ff00;
 }
 
 #restartBtn {
-  background: #00bcd4;
+  background: #b90101;
   border: none;
   color: #fff;
   padding: 0.8rem 2rem;

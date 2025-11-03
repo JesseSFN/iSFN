@@ -32,10 +32,10 @@ document.addEventListener("DOMContentLoaded", () => {
   endPopup.id = 'endPopup';
   endPopup.innerHTML = `
   <div id="endPopupContent">
-    <h2>🎉 Goed Gedaan!</h2>
+    <h2>Goed Gedaan!</h2>
     <p>Je hebt een score van:</p>
     <p id="finalScore"></p>
-    <p>📸 Als je wilt, maak hier een foto van als herinnering!</p>
+    <p>Roep een Leiding om hier een foto van te maken!</p>
     <button id="restartBtn">Reset</button>
   </div>
 `;
@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function showEndPopup() {
-    finalScoreEl.textContent = `Je eindscore is ${score} van de ${LOCS.length}`;
+    finalScoreEl.textContent = `Je eindscore is ${score}`;
     endPopup.style.display = 'flex';
   }
 
@@ -190,13 +190,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById('resetBtn').addEventListener('click', resetAll);
 
-  // ✅ Start
-  updateScore();
-  if (LOCS.length > 0) {
+// ✅ Start
+updateScore();
+
+if (LOCS.length > 0) {
+  // 🔹 Controle: als alle vragen al beantwoord zijn, toon meteen het eindscherm
+  if (score >= LOCS.length) {
+    showEndPopup();
+  } else {
     if (currentIndex !== -1) {
       loadQuestion(currentIndex);
     } else {
       loadQuestion(pickRandomIndex());
     }
   }
+}
 });
