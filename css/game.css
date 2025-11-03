@@ -79,3 +79,11 @@
   background-color: #f44336;
   color: white;
 }
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
