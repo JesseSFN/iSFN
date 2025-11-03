@@ -1,3 +1,24 @@
+:root {
+  --bg: #121212;
+  --panel-bg: #1e1e1e;
+  --text: #ffffff;
+  --hint: #bbbbbb;
+  --accent: #0b74de;
+  --accent-hover: #095bb0;
+  --success: #2e7d32;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, var(--bg) 0%, var(--panel-bg) 100%);
+  font-family: "Noto Sans", sans-serif;
+  color: var(--text);
+}
+
 #map {
   height: 500px;
   margin-top: 20px;
@@ -15,6 +36,11 @@
 
 #locations-list {
   margin-top: 20px;
+}
+
+ul {
+  padding-left: 0;
+  margin-left: 0;
 }
 
 .location-item {
@@ -55,14 +81,34 @@
   display: block;
 }
 
+.checkmark {
+  margin-left: 10px;
+  color: #fff;
+  font-weight: bold;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+/* --- Buttons --- */
 .back-btn {
   position: absolute;
   top: 10px;
   left: 10px;
   font-size: 18px;
   padding: 10px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-family: "Noto Sans", sans-serif;
   background-color: var(--accent);
   color: #fff;
+  transition: all 0.3s ease;
 }
 
 .back-btn:hover {
@@ -70,20 +116,18 @@
   transform: scale(1.05);
 }
 
+/* reset button blijft zoals je had */
 .reset-btn {
   position: absolute;
   top: 10px;
   right: 10px;
   font-size: 18px;
   padding: 10px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-family: "Noto Sans", sans-serif;
   background-color: #f44336;
   color: white;
-}
-
-body {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
 }

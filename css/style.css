@@ -1,19 +1,14 @@
-:root {
-  --bg: #121212;
-  --panel-bg: #1e1e1e;
-  --text: #ffffff;
-  --hint: #bbbbbb;
-  --accent: #0b74de;
-  --accent-hover: #095bb0;
-  --success: #2e7d32;
-}
-
 body {
   margin: 0;
   padding: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #121212 0%, #1e1e1e 100%);
+
   font-family: "Noto Sans", sans-serif;
-  color: var(--text);
-  background: linear-gradient(135deg, var(--bg) 0%, var(--panel-bg) 100%);
 }
 
 ul {
@@ -22,36 +17,35 @@ ul {
 }
 
 .logo {
-  user-select: none;
-  filter: drop-shadow(0 0 8px rgba(0,0,0,0.6));
+  width: 220px;
+  height: auto;
   margin-bottom: 40px;
+  user-select: none;
 }
 
-button {
-  font-family: "Noto Sans", sans-serif;
+.start-button {
+  background-color: #00796b;
+  color: white;
   border: none;
   border-radius: 12px;
   padding: 15px 40px;
   font-size: 22px;
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
-}
-
-.start-button {
-  background-color: var(--accent);
-  color: var(--text);
+  font-family: Noto Sans;
 }
 
 .start-button:hover {
-  background-color: var(--accent-hover);
+  background-color: #004d40;
   transform: scale(1.05);
-  box-shadow: 0 6px 16px rgba(11,116,222,0.4);
 }
 
 footer {
+  position: absolute;
+  bottom: 15px;
   font-size: 14px;
-  color: var(--hint);
+  color: #333;
   text-align: center;
 }
