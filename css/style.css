@@ -16,18 +16,15 @@ body {
   background: linear-gradient(135deg, var(--bg) 0%, var(--panel-bg) 100%);
 }
 
-
 ul {
   padding-left: 0;
   margin-left: 0;
 }
 
 .logo {
-  width: 220px;
-  height: auto;
-  margin-bottom: 40px;
   user-select: none;
   filter: drop-shadow(0 0 8px rgba(0,0,0,0.6));
+  margin-bottom: 40px;
 }
 
 button {
@@ -50,12 +47,10 @@ button {
 .start-button:hover {
   background-color: var(--accent-hover);
   transform: scale(1.05);
-  box-shadow: 0 6px 16px rgba(11, 116, 222, 0.4);
+  box-shadow: 0 6px 16px rgba(11,116,222,0.4);
 }
 
 footer {
-  position: absolute;
-  bottom: 15px;
   font-size: 14px;
   color: var(--hint);
   text-align: center;

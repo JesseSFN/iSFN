@@ -4,19 +4,17 @@
   justify-content: center;
 }
 
-/* Individual buttons */
 .explo-button { background-color: #922B3E; color: white; }
 .welp-button  { background-color: #317F43; color: white; }
 .scout-button { background-color: #9E9764; color: white; }
 .bever-button { background-color: #d53032; color: white; }
 
-/* Hover effects */
 .explo-button:hover { background-color: #6b1f2d; transform: scale(1.05); }
 .welp-button:hover  { background-color: #266134; transform: scale(1.05); }
 .scout-button:hover { background-color: #7c774f; transform: scale(1.05); }
 .bever-button:hover { background-color: #811f20; transform: scale(1.05); }
 
-/* Mobile responsive */
+/* Mobile */
 @media (max-width: 768px) {
   .button-container {
     flex-direction: column;
