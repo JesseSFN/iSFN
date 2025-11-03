@@ -159,6 +159,11 @@ button.secondary {
   .hint {
     text-align: left;
   }
+  
+  .panel {
+  position: relative;
+}
+
 }
 
 /* 🌙 Donkere einde-popup stijl */
