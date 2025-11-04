@@ -341,4 +341,13 @@ const locations = [
         lng: -86.7617503,
         radius: 400 // ongeveer 400 km
       },
+      {
+        name: "Gevoel",
+        hint: "",
+        ans: "India",
+        media: "https://jessesfn.github.io/iSFN/media-vragen/Gevoel.png",
+        lat: 23.2578301,
+        lng: 78.4334586,
+        radius: 400 // ongeveer 400 km
+      },
 ];
