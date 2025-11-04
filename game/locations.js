@@ -276,7 +276,7 @@ const locations = [
         media: "",
         lat: 45.5124061,
         lng: -122.7804382,
-        radius: 0.02 // ongeveer 20 meter
+        radius: 0.05 // ongeveer 50 meter
       },
       {
         name: "hoe laat is het?",
