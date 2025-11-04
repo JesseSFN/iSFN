@@ -348,6 +348,6 @@ const locations = [
         media: "https://jessesfn.github.io/iSFN/media-vragen/Gevoel.png",
         lat: 23.2578301,
         lng: 78.4334586,
-        radius: 400 // ongeveer 400 km
+        radius: 1000 // ongeveer 400 km
       },
 ];
