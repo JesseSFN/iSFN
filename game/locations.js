@@ -249,15 +249,15 @@ const locations = [
         hint: "In 1907 gebeurde iets op een plek. Als dat nooit gebeurd was, zouden wij hier met z’n allen niet zijn. Welke plek?",
         lat: 50.6919075,
         lng: -1.9734133,
-        radius: 1 // ongeveer 1 km
+        radius: 1.5 // ongeveer 1.5 km
       },
       {
         name: "Ongeluk bij ongeluk",
         ans: "Rudi Dekker, Huffman Aviation, 400 Airport Ave E	",
         media: "",
         hint: "In 2001 veranderde een gebeurtenis in New York het leven van een man voorgoed. Hij zou nooit meer hetzelfde zijn. Welk gebouw zat zijn bedrijf?",
-        lat: 27.0780872,
-        lng: -82.4403958,
+        lat: 27.073887443312785,
+        lng: -82.44054329197311,
         radius: 1 // ongeveer 1 km
       }, 
       {
@@ -297,7 +297,7 @@ const locations = [
         radius: 20 // ongeveer 20 km
       },
       {
-        name: "koud",
+        name: "Koud",
         hint: "",
         ans: "Waar de Titanic gezonken is",
         media: "https://jessesfn.github.io/iSFN/media-vragen/koud.wav",
@@ -330,7 +330,7 @@ const locations = [
         media: "",
         lat: 51.5136782,
         lng: -0.1347802,
-        radius: 0.2 // ongeveer 300 meter
+        radius: 0.3 // ongeveer 300 meter
       },
       {
         name: "Klinkt als muziek voor mijn oren",
@@ -348,6 +348,16 @@ const locations = [
         media: "https://jessesfn.github.io/iSFN/media-vragen/Gevoel.png",
         lat: 23.2578301,
         lng: 78.4334586,
-        radius: 1000 // ongeveer 400 km
+        radius: 1000 // ongeveer 1000 km
       },
+            {
+        name: "Insula Bonae Fortunae",
+        hint: "",
+        ans: "John Allen Cau - North Sentinel Island",
+        media: "https://jessesfn.github.io/iSFN/media-vragen/ibf.mp3",
+        lat: 11.56005259669176,
+        lng: 92.23951743920667,
+        radius: 1 // ongeveer 1 km
+      },
+
 ];
