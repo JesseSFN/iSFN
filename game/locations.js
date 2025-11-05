@@ -357,7 +357,7 @@ const locations = [
         media: "https://jessesfn.github.io/iSFN/media-vragen/ibf.mp3",
         lat: 11.56005259669176,
         lng: 92.23951743920667,
-        radius: 1 // ongeveer 1 km
+        radius: 5 // ongeveer 5 km
       },
 
 ];
