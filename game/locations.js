@@ -60,7 +60,7 @@ const locations = [
         media: "",
         lat: -33.8574256,
         lng: 151.2148712,
-        radius: 0.2 // ongeveer 20 meter
+        radius: 0.1 // ongeveer 100 meter
       },
       {
         name: "Cgz hkzkqktz joz?",
@@ -330,7 +330,7 @@ const locations = [
         media: "",
         lat: 51.5136782,
         lng: -0.1347802,
-        radius: 1 // ongeveer 1 km
+        radius: 0.2 // ongeveer 300 meter
       },
       {
         name: "Klinkt als muziek voor mijn oren",
