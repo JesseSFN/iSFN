@@ -279,13 +279,13 @@ const locations = [
         radius: 0.05 // ongeveer 50 meter
       },
       {
-        name: "hoe laat is het?",
+        name: "Hoe laat is het?",
         hint: "Een klok die niet de juiste tijd aangeeft, is super irritant. Maar als je doel is om iemand in de war te brengen, kan het juist handig zijn. Bijvoorbeeld om tegen het kwaad te strijden. Welk land?",
         ans: "Malta",
         media: "",
         lat: 35.885868,
         lng: 14.4027236,
-        radius: 300 // ongeveer 300 km
+        radius: 100 // ongeveer 100 km
       },
       {
         name: "Wiskunde",
