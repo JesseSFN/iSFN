@@ -271,7 +271,7 @@ const locations = [
       },
       {
         name: "Vliegtuigmodus",
-        hint: "Waar is een iPhone ooit uit een vliegtuig gevallen van 16.000 voet en toch overleefde?",
+        hint: "Waar viel een iPhone ooit uit een vliegtuig van 16.000 voet en overleefde het?",
         ans: "SW Barnes Rd Portland Verenigde Staten",
         media: "",
         lat: 45.5124061,
