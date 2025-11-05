@@ -285,7 +285,7 @@ const locations = [
         media: "",
         lat: 35.885868,
         lng: 14.4027236,
-        radius: 100 // ongeveer 100 km
+        radius: 50 // ongeveer 100 km
       },
       {
         name: "Wiskunde",
