@@ -42,7 +42,7 @@ const locations = [
         media: "",
         lat: 51.51383972167969,
         lng: -0.0982590988278389,
-        radius: 30 // ongeveer 30 km
+        radius: 0.01 // ongeveer 10 meter
       },
       {
         name: "Macro foto?",
@@ -114,7 +114,7 @@ const locations = [
         media: "",
         lat: 33.83042923993267,
         lng: -117.76877338191034,
-        radius: 200 // ongeveer 5 km
+        radius: 100 // ongeveer 100 km
       },
       {
         name: "Kedeng kedeng",
@@ -231,7 +231,7 @@ const locations = [
         mediSa: "",
         lat: 56.02453877107302,
         lng: 10.521098060541842,
-        radius: 300 // // ongeveer 300 km
+        radius: 200 // // ongeveer 200 km
       }, 
       {
         name: "Tweede Wereldoorlog",
@@ -249,7 +249,7 @@ const locations = [
         hint: "In 1907 gebeurde iets op een plek. Als dat nooit gebeurd was, zouden wij hier met z’n allen niet zijn. Welke plek?",
         lat: 50.6919075,
         lng: -1.9734133,
-        radius: 5 // ongeveer 5 km
+        radius: 1 // ongeveer 1 km
       },
       {
         name: "Ongeluk bij ongeluk",
@@ -258,7 +258,7 @@ const locations = [
         hint: "In 2001 veranderde een gebeurtenis in New York het leven van een man voorgoed. Hij zou nooit meer hetzelfde zijn. Welk gebouw zat zijn bedrijf?",
         lat: 27.0780872,
         lng: -82.4403958,
-        radius: 0.5 // ongeveer 500 meter
+        radius: 1 // ongeveer 1 km
       }, 
       {
         name: "Waar oh waar?",
@@ -285,7 +285,7 @@ const locations = [
         media: "",
         lat: 35.885868,
         lng: 14.4027236,
-        radius: 50 // ongeveer 100 km
+        radius: 30 // ongeveer 30 km
       },
       {
         name: "Wiskunde",
@@ -339,7 +339,7 @@ const locations = [
         media: "https://jessesfn.github.io/iSFN/media-vragen/KAMVMO.png",
         lat: 32.9598909,
         lng: -86.7617503,
-        radius: 400 // ongeveer 400 km
+        radius: 300 // ongeveer 300 km
       },
       {
         name: "Gevoel",
