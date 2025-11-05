@@ -42,7 +42,7 @@ const locations = [
         media: "",
         lat: 51.51383972167969,
         lng: -0.0982590988278389,
-        radius: 0.01 // ongeveer 10 meter
+        radius: 0.1 // ongeveer 100 meter
       },
       {
         name: "Macro foto?",
@@ -60,7 +60,7 @@ const locations = [
         media: "",
         lat: -33.8574256,
         lng: 151.2148712,
-        radius: 0.02 // ongeveer 20 meter
+        radius: 0.2 // ongeveer 20 meter
       },
       {
         name: "Cgz hkzkqktz joz?",
