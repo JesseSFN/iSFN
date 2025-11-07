@@ -350,13 +350,22 @@ const locations = [
         lng: 78.4334586,
         radius: 1000 // ongeveer 1000 km
       },
-            {
+      {
         name: "Insula Bonae Fortunae",
         hint: "",
         ans: "John Allen Cau - North Sentinel Island",
         media: "https://jessesfn.github.io/iSFN/media-vragen/ibf.mp3",
         lat: 11.56005259669176,
         lng: 92.23951743920667,
+        radius: 5 // ongeveer 5 km
+      },
+      {
+        name: "Vroom",
+        hint: "We reizen naar een stad die van nul werd opgebouwd voor arbeiders van een fabriek",
+        ans: "Wolfsburg",
+        media: "",
+        lat: 52.42308056107357,
+        lng: 10.790303214085517,
         radius: 5 // ongeveer 5 km
       },
 
