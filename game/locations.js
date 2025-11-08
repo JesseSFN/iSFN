@@ -375,7 +375,7 @@ const locations = [
         media: "",
         lat: 40.80415093772755,
         lng: -76.33997248390956,
-        radius: 1 // ongeveer 1 km
+        radius: 2 // ongeveer 1 km
       },
 
 ];
