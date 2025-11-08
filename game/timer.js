@@ -1,5 +1,5 @@
 // timer.js
-export function startMotivatieTimer(intervalMs = 5000) {
+export function startMotivatieTimer(intervalMs = 3600000) {
   // beschikbare geluiden
   const sounds = [
     '../Sounds/OPSCHIETEN.wav',
