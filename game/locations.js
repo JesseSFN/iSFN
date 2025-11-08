@@ -368,5 +368,14 @@ const locations = [
         lng: 10.790303214085517,
         radius: 5 // ongeveer 5 km
       },
+      {
+        name: "Heet",
+        hint: "Een grond die altijd brand.",
+        ans: "Centralia mine fire",
+        media: "",
+        lat: 40.80415093772755,
+        lng: -76.33997248390956,
+        radius: 1 // ongeveer 1 km
+      },
 
 ];
