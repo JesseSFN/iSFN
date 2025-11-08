@@ -18,7 +18,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ✅ Voeg een dark mode tile layer toe
   L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-    attribution: '&copy; <a href="https://carto.com/attributions">CARTO</a> | © OpenStreetMap contributors',
     subdomains: 'abcd',
     maxZoom: 19
   }).addTo(map);
