@@ -316,8 +316,8 @@ const locations = [
       },
       {
         name: "Carpe Diem",
-        hint: "O Captain! my Captain!",
-        ans: "school waar Dead poets society is opgenomen",
+        hint: "O Captain! my Captain! We gaan naar een film locatie.",
+        ans: "School waar Dead poets society is opgenomen",
         media: "",
         lat: 39.4331744,
         lng: -75.6897098,
