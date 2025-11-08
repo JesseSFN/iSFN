@@ -2,9 +2,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 const LOCS = (typeof locations !== 'undefined' && Array.isArray(locations)) ? locations : [];
 const map = L.map('map', { worldCopyJump: true }).setView([20, 0], 2);
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-maxZoom: 19,
-attribution: '© OpenStreetMap contributors'
+
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+  attribution: '&copy; <a href="https://carto.com/attributions">CARTO</a> | © OpenStreetMap contributors',
+  subdomains: 'abcd',
+  maxZoom: 19
 }).addTo(map);
 
 const featureGroup = L.featureGroup().addTo(map);

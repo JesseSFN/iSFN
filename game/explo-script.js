@@ -11,11 +11,12 @@ document.addEventListener("DOMContentLoaded", () => {
   let usedIndexes = new Set(JSON.parse(localStorage.getItem('usedIndexes') || '[]'));
 
   // ✅ Map-initialisatie
-  const map = L.map('map', { worldCopyJump: true }).setView([20, 0], 2);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '© OpenStreetMap contributors'
-  }).addTo(map);
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+  attribution: '&copy; <a href="https://carto.com/attributions">CARTO</a> | © OpenStreetMap contributors',
+  subdomains: 'abcd',
+  maxZoom: 19
+}).addTo(map);
+
 
   let guessMarker = null;
   let selectedCoords = null;
