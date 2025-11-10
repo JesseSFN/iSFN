@@ -377,5 +377,14 @@ const locations = [
         lng: -76.33997248390956,
         radius: 2 // ongeveer 1 km
       },
+      {
+        name: "subeR",
+        hint: "",
+        ans: "Tankman - Tiananmenplein",
+        media: "https://jessesfn.github.io/iSFN/media-vragen/subeR.png",
+        lat: 39.906598873140496,
+        lng: 116.39992900790104,
+        radius: 0.3 // ongeveer 300 meter
+      },
 
 ];
