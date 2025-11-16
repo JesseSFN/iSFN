@@ -386,5 +386,14 @@ const locations = [
         lng: 116.39992900790104,
         radius: 0.3 // ongeveer 300 meter
       },
+      {
+        name: "Slecht Breken",
+        hint: "Seizoen 4, aflevering 6, 28 minuten en 31 seconden. Waar zijn we?	",
+        ans: "Breaking Bad - Four Corners Monument",
+        media: "",
+        lat: 36.998993167946544,
+        lng: -109.04520476736661,
+        radius: 0.01 // ongeveer 10 meter
+      },
 
 ];
