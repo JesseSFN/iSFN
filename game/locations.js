@@ -395,5 +395,14 @@ const locations = [
         lng: -109.04520476736661,
         radius: 0.03 // ongeveer 30 meter
       },
+      {
+        name: "1934",
+        hint: "130 Kogels",
+        ans: "Waar Bonnie en Clyde zijn kapot gemaakt.",
+        media: "https://jessesfn.github.io/iSFN/media-vragen/1934.png",
+        lat: 32.44127353706743,
+        lng: -93.09260128414329,
+        radius: 0.03 // ongeveer 30 meter
+      },
 
 ];
