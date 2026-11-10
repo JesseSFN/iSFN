@@ -176,6 +176,59 @@ check('alle vragen hebben geldige velden (een lege hint mag alleen met media)', 
 check('media verwijst niet naar een externe site (werkt zo ook lokaal)',
   locations.every(l => !l.media || !/^https?:/.test(l.media)));
 
+// ------------------------------------------------------- beheerpagina (admin.js)
+console.log('admin.js (vragen toevoegen/verwijderen)');
+const admin = require(join(root, 'game/admin.js'));
+
+// Vergelijkt op inhoud, niet op de volgorde van de velden binnen een vraag.
+const sameContent = (a, b) => {
+  const sorted = v => JSON.stringify(v, (k, x) => x && typeof x === 'object' && !Array.isArray(x)
+    ? Object.fromEntries(Object.keys(x).sort().map(key => [key, x[key]])) : x);
+  return sorted(a) === sorted(b);
+};
+const regenerated = admin.serializeLocations(locations);
+const reloaded = {};
+vm.runInNewContext(regenerated + '\nthis.locations = locations;', reloaded);
+check('genereren: alle bestaande vragen komen ongewijzigd terug (rondreis)',
+  sameContent(reloaded.locations, locations));
+check('genereren: het bestand begint zoals het bestaande locations.js', regenerated.startsWith('const locations = ['));
+
+const nasty = [{ name: 'Aanhalingstekens "dubbel" en \'enkel\'', hint: 'regel 1\nregel 2 </script> \\ `backtick`', ans: '', media: '',
+  lat: 1.5, lng: -2.25, radius: 0.2, extra: 'blijft' }];
+const nastyBack = {};
+vm.runInNewContext(admin.serializeLocations(nasty) + '\nthis.locations = locations;', nastyBack);
+check('genereren: speciale tekens in teksten breken het bestand niet',
+  sameContent(nastyBack.locations, nasty));
+check('genereren: onbekende extra velden blijven behouden', nastyBack.locations[0].extra === 'blijft');
+check('genereren: lege lijst geeft een geldig bestand', (() => {
+  const r = {}; vm.runInNewContext(admin.serializeLocations([]) + '\nthis.locations = locations;', r);
+  return Array.isArray(r.locations) && r.locations.length === 0;
+})());
+check('commentaar: 0,2 km is 200 meter', admin.radiusComment(0.2) === 'ongeveer 200 meter');
+check('commentaar: 5 km', admin.radiusComment(5) === 'ongeveer 5 km');
+
+check('getal: komma als decimaalteken', admin.parseNumber('52,37') === 52.37);
+check('getal: negatief', admin.parseNumber(' -4.5 ') === -4.5);
+check('getal: tekst, leeg en meerdere punten zijn ongeldig',
+  ['abc', '', '1.2.3', '12abc'].every(t => Number.isNaN(admin.parseNumber(t))));
+
+const good = { name: 'Nieuw', hint: 'Een hint', ans: '', media: '', lat: 52, lng: 5, radius: 3 };
+const base = [{ name: 'Bestaand', hint: 'x', lat: 0, lng: 0, radius: 1 }];
+check('validatie: geldige vraag heeft geen fouten', admin.validateQuestion(good, base, -1).length === 0);
+check('validatie: lege naam wordt geweigerd', admin.validateQuestion({ ...good, name: '  ' }, base, -1).length === 1);
+check('validatie: dubbele naam (ook andere hoofdletters) wordt geweigerd',
+  admin.validateQuestion({ ...good, name: 'BESTAAND' }, base, -1).some(e => /bestaat al/.test(e)));
+check('validatie: een vraag mag zijn eigen naam houden bij bewerken',
+  admin.validateQuestion({ ...good, name: 'Bestaand' }, base, 0).length === 0);
+check('validatie: geen hint en geen media wordt geweigerd', admin.validateQuestion({ ...good, hint: '' }, base, -1).length === 1);
+check('validatie: lege hint is goed mét media', admin.validateQuestion({ ...good, hint: '', media: '../media-vragen/a.png' }, base, -1).length === 0);
+check('validatie: coördinaten buiten bereik worden geweigerd',
+  admin.validateQuestion({ ...good, lat: 91 }, base, -1).length === 1 && admin.validateQuestion({ ...good, lng: -181 }, base, -1).length === 1);
+check('validatie: ontbrekende coördinaten (NaN) worden geweigerd', admin.validateQuestion({ ...good, lat: NaN, lng: NaN }, base, -1).length === 2);
+check('validatie: straal 0 of negatief wordt geweigerd',
+  admin.validateQuestion({ ...good, radius: 0 }, base, -1).length === 1 && admin.validateQuestion({ ...good, radius: -2 }, base, -1).length === 1);
+check('validatie: javascript:-mediapad wordt geweigerd', admin.validateQuestion({ ...good, media: 'javascript:alert(1)' }, base, -1).length === 1);
+
 // ------------------------------------------------- pagina's en bestandsverwijzingen
 console.log("pagina's en verwijzingen");
 function walk(dir, out = []) {

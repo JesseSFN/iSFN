@@ -245,6 +245,95 @@ const noErrors = (name, p) => check(name + ': geen JavaScript- of consolefouten'
       await context.close();
     }
 
+    // ------------------------------------------------------ Beheerpagina
+    console.log('Beheerpagina (game/admin.html)');
+    {
+      const { context, page, problems } = await open(browser, base, 'game/admin.html');
+      noErrors('laden', problems);
+      check('laden: geen lokale bestanden ontbreken', problems.failedLocal.length === 0, problems.failedLocal.join(', '));
+      const total = await page.evaluate(() => locations.length);
+      check('alle vragen staan in de lijst', (await page.locator('#list li').count()) === total && (await page.textContent('#count')) === total + ' vragen');
+      check('geen concept-badge bij ongewijzigde lijst', await page.isHidden('#dirty'));
+
+      // Ongeldige vraag: fouten, niets toegevoegd
+      await page.click('#save');
+      check('lege vraag: foutmeldingen, niets toegevoegd', (await page.isVisible('#errors')) && (await page.locator('#list li').count()) === total);
+
+      // Vraag toevoegen via kaartklik; komma als decimaalteken in de straal
+      await page.fill('#f-name', 'Testvraag "één"');
+      await page.fill('#f-hint', 'Waar is de Dam?');
+      await page.fill('#f-ans', 'Amsterdam');
+      await page.fill('#f-radius', '0,5');
+      await page.evaluate(() => __map.clickAt(52.3731, 4.8926));
+      check('kaartklik vult de coördinaten in', (await page.inputValue('#f-lat')) === '52.3731' && (await page.inputValue('#f-lng')) === '4.8926');
+      check('voorbeeld toont marker en cirkel op de kaart', await page.evaluate(() => __map._layers.filter(l => l.isCircle).length === 1 && __map._layers.filter(l => l.options && l.options.draggable).length === 1));
+      await page.click('#save');
+      check('toevoegen: lijst wordt één langer en het formulier is leeg', (await page.locator('#list li').count()) === total + 1 && (await page.inputValue('#f-name')) === '');
+      check('toevoegen: concept-badge verschijnt', await page.isVisible('#dirty'));
+
+      // Dubbele naam wordt geweigerd
+      await page.fill('#f-name', 'testvraag "één"'); await page.fill('#f-hint', 'x');
+      await page.fill('#f-lat', '1'); await page.fill('#f-lng', '1');
+      await page.click('#save');
+      check('dubbele naam wordt geweigerd', /bestaat al/.test(await page.textContent('#errors')) && (await page.locator('#list li').count()) === total + 1);
+      await page.click('#cancel');
+
+      // Bewerken
+      await page.locator('#list li', { hasText: 'Testvraag' }).click();
+      check('bewerken: formulier toont de vraag en de verwijderknop', (await page.inputValue('#f-name')) === 'Testvraag "één"' && await page.isVisible('#delete'));
+      await page.fill('#f-hint', 'Aangepaste hint');
+      await page.click('#save');
+
+      // Concept blijft na herladen
+      await page.reload({ waitUntil: 'load' }); await sleep(150);
+      check('herladen: concept is teruggezet', (await page.locator('#list li').count()) === total + 1 && await page.isVisible('#dirty'));
+
+      // Download: inhoud moet geldig zijn en de nieuwe vraag bevatten
+      const [download] = await Promise.all([page.waitForEvent('download'), page.click('#download')]);
+      const text = fs.readFileSync(await download.path(), 'utf8');
+      const parsed = {}; require('node:vm').runInNewContext(text + '\nthis.locations = locations;', parsed);
+      const added = parsed.locations.find(q => q.name === 'Testvraag "één"');
+      check('download: bestand heet locations.js', download.suggestedFilename() === 'locations.js');
+      check('download: bevat alle vragen plus de nieuwe, met de aangepaste hint',
+        parsed.locations.length === total + 1 && added && added.hint === 'Aangepaste hint' && added.radius === 0.5 && added.lat === 52.3731, JSON.stringify(added));
+
+      // Verwijderen via de lijst en via het formulier
+      await page.locator('#list li', { hasText: 'Testvraag' }).locator('button').click(); // dialog wordt automatisch bevestigd
+      check('verwijderen via lijst: vraag is weg en badge verdwijnt', (await page.locator('#list li').count()) === total && await page.isHidden('#dirty'));
+      await page.locator('#list li').first().click();
+      const firstName = (await page.inputValue('#f-name'));
+      await page.click('#delete');
+      check('verwijderen via formulier: vraag is weg', (await page.locator('#list li').count()) === total - 1 && !(await page.locator('#list li', { hasText: firstName }).count()));
+
+      // Zoeken en weggooien
+      await page.fill('#search', 'zzzzgeenresultaat');
+      check('zoeken zonder resultaat: lege lijst', (await page.locator('#list li').count()) === 0);
+      await page.fill('#search', '');
+      await page.click('#discard');
+      check('concept weggooien: alle gepubliceerde vragen terug', (await page.locator('#list li').count()) === total && await page.isHidden('#dirty'));
+      await page.reload({ waitUntil: 'load' }); await sleep(150);
+      check('na weggooien en herladen: geen oud concept', (await page.locator('#list li').count()) === total && await page.isHidden('#dirty'));
+      noErrors('gebruik', problems);
+      await context.close();
+    }
+
+    // Verouderd concept (gepubliceerde vragen zijn intussen veranderd)
+    {
+      const { context, page, problems } = await open(browser, base, 'game/admin.html', {
+        storage: { isfnAdminDraft: JSON.stringify({ base: '[]', items: [{ name: 'Oud', hint: 'h', ans: '', media: '', lat: 1, lng: 1, radius: 1 }] }) }
+      });
+      const total = await page.evaluate(() => locations.length);
+      check('verouderd concept: gepubliceerde lijst wordt getoond met een waarschuwing', (await page.locator('#list li').count()) === total && await page.isVisible('#notice'));
+      noErrors('verouderd concept', problems);
+      await context.close();
+    }
+    {
+      const { context, page, problems } = await open(browser, base, 'game/admin.html', { storage: { isfnAdminDraft: '{kapot' } });
+      check('kapot concept: pagina start gewoon', (await page.locator('#list li').count()) > 0);
+      noErrors('kapot concept', problems);
+      await context.close();
+    }
+
     // ------------------------------------------------------ Terugval
     console.log('Reservekaart bij problemen');
     const fallbackCases = [

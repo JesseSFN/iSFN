@@ -20,9 +20,15 @@ De bibliotheken worden met een vaste versie van unpkg geladen (Leaflet 1.9.4, Ma
   - `script.js`, `explo-script.js`, `scout-script.js`, `cheat-loc.js`, `timer.js`: de spellogica per variant.
 - `media-vragen/`, `Images/`, `Sounds/`: bestanden bij de vragen en het spel.
 
+## Vragen beheren
+
+Open `game/admin.html` (op de site: `/game/admin.html`; de pagina staat niet in het menu). Hier voeg je vragen toe, bewerk je ze en verwijder je ze, met de kaart om de plek en straal te kiezen.
+
+De site is statisch en heeft geen server, dus de pagina bewaart alleen een concept in je eigen browser. Klik op **Download locations.js**, vervang `game/locations.js` in de repository door dat bestand en commit het; pas dan zien spelers de wijzigingen. Nieuwe afbeeldingen, audio of video zet je zelf in `media-vragen/`.
+
 ## Testen
 
 Geen installatie nodig voor de eerste test.
 
-- `node tests/check.mjs`: logica, Nederlandse labelregels, vragenlijst, alle verwijzingen in de pagina's.
+- `node tests/check.mjs`: logica, Nederlandse labelregels, vragenlijst, het genereren van `locations.js` door de beheerpagina, alle verwijzingen in de pagina's.
 - `node tests/smoke.cjs`: speelt alle spelvarianten door in headless Chromium (vereist Playwright). Leaflet en MapLibre worden daarbij vervangen door nepversies, dus dit test niet de echte kaart.

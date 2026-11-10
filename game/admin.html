@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex" />
+  <title>iSFN - Vragenbeheer</title>
+  <link rel="icon" href="/iSFN/Images/iSFN_favicon.png" type="image/png" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.13.0/dist/maplibre-gl.css" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+  <header>
+    <img src="../Images/iSFN_Logo_V5_White.svg" alt="iSFN Logo" />
+    <h1>Vragenbeheer</h1>
+    <span id="dirty" class="badge" hidden>Niet-gepubliceerde wijzigingen</span>
+    <div class="header-actions">
+      <button id="download" class="primary">Download locations.js</button>
+      <button id="copy">Kopieer code</button>
+      <button id="discard" class="danger" title="Gooit je concept weg en laadt de gepubliceerde vragen">Concept weggooien</button>
+    </div>
+  </header>
+
+  <div id="notice" class="notice" hidden></div>
+
+  <main class="layout">
+    <section class="col list-col">
+      <div class="list-head">
+        <input id="search" type="search" placeholder="Zoek vraag…" aria-label="Zoek vraag" />
+        <button id="new">+ Nieuwe vraag</button>
+      </div>
+      <div id="count" class="muted"></div>
+      <ul id="list"></ul>
+    </section>
+
+    <section class="col form-col">
+      <h2 id="form-title">Nieuwe vraag</h2>
+      <form id="form" novalidate>
+        <label>Naam <span class="muted">(moet uniek zijn)</span>
+          <input id="f-name" type="text" autocomplete="off" />
+        </label>
+        <label>Hint <span class="muted">(mag leeg zijn als er media is)</span>
+          <textarea id="f-hint" rows="3"></textarea>
+        </label>
+        <label>Antwoord <span class="muted">(voor de leiding)</span>
+          <input id="f-ans" type="text" autocomplete="off" />
+        </label>
+        <label>Media <span class="muted">(optioneel, bijv. <code>../media-vragen/foto.png</code>)</span>
+          <input id="f-media" type="text" autocomplete="off" />
+        </label>
+        <div id="media-preview" class="media-preview"></div>
+        <div class="row">
+          <label>Breedtegraad
+            <input id="f-lat" type="text" inputmode="decimal" autocomplete="off" />
+          </label>
+          <label>Lengtegraad
+            <input id="f-lng" type="text" inputmode="decimal" autocomplete="off" />
+          </label>
+          <label>Straal (km)
+            <input id="f-radius" type="text" inputmode="decimal" autocomplete="off" />
+          </label>
+        </div>
+        <p class="muted small">Klik op de kaart of sleep de marker om de plek te kiezen. Een straal van 0,2 is 200 meter.</p>
+
+        <div id="errors" class="errors" role="alert" hidden></div>
+
+        <div class="buttons">
+          <button type="submit" id="save" class="primary">Toevoegen</button>
+          <button type="button" id="cancel">Annuleren</button>
+          <button type="button" id="delete" class="danger" hidden>Verwijderen</button>
+        </div>
+      </form>
+
+      <details class="publish">
+        <summary>Hoe publiceer ik dit?</summary>
+        <ol>
+          <li>Klik op <strong>Download locations.js</strong>.</li>
+          <li>Vervang <code>game/locations.js</code> in de repository door dat bestand en commit het.</li>
+          <li>Heb je media toegevoegd? Zet dat bestand ook in <code>media-vragen/</code>.</li>
+        </ol>
+        <p class="muted small">Je concept wordt alleen in deze browser bewaard. De spelers zien pas iets nieuws na stap 2.</p>
+      </details>
+    </section>
+
+    <section class="col map-col">
+      <div id="map"></div>
+    </section>
+  </main>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/maplibre-gl@5.13.0/dist/maplibre-gl.js"></script>
+  <script src="https://unpkg.com/@maplibre/maplibre-gl-leaflet@0.1.3/leaflet-maplibre-gl.js"></script>
+  <script src="common.js"></script>
+  <script src="map.js"></script>
+  <script src="locations.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
