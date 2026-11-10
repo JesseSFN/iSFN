@@ -24,11 +24,12 @@
 (function () {
   'use strict';
 
-  var STYLE_URL = 'https://tiles.openfreemap.org/styles/dark';
+  var STYLE_URL = 'https://tiles.openfreemap.org/styles/liberty';
 
-  // Zelfde kleur als de achtergrond van de donkere stijl: voorkomt een lichte
-  // flits zolang de kaart nog laadt.
-  var MAP_BACKGROUND = 'rgb(12, 12, 12)';
+  // Lichte, gedetailleerde stijl (wegen, gebouwen, landgebruik, terrein). De
+  // achtergrondkleur komt overeen met het land in die stijl, zodat er geen
+  // grijze flits is zolang de kaart nog laadt.
+  var MAP_BACKGROUND = '#f8f4f0';
 
   // Attributie zoals OpenFreeMap die voorschrijft.
   var VECTOR_ATTRIBUTION =

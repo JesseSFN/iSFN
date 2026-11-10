@@ -4,7 +4,7 @@ iSFN is een nabootsing van iScout
 
 De spelkaart gebruikt geen API-key, account of instelling.
 
-- **Data:** OpenStreetMap, als vector-tiles van [OpenFreeMap](https://openfreemap.org) (gratis, geen key), stijl `dark`.
+- **Data:** OpenStreetMap, als vector-tiles van [OpenFreeMap](https://openfreemap.org) (gratis, geen key), stijl `liberty` (licht en gedetailleerd).
 - **Weergave:** MapLibre GL JS binnen de bestaande Leaflet-kaart (`@maplibre/maplibre-gl-leaflet`), zodat markers en klikken in de spelscripts hetzelfde werken.
 - **Nederlandse labels:** `game/map.js` vervangt elk naamlabel door: Nederlandse naam → Latijnse naam → internationale naam → Engelse naam → lokale naam. Een Nederlandse of Latijnse naam bestaat alleen als OpenStreetMap die heeft; landen, hoofdsteden en grote steden hebben die vrijwel altijd, kleine plaatsen niet.
 - **Terugval:** werkt de vectorkaart niet (geen WebGL, OpenFreeMap onbereikbaar), dan gebruikt het spel gewone OpenStreetMap-tegels, zonder Nederlandse labels.

@@ -60,7 +60,7 @@ async function open(browser, base, url, { glMode = 'ok', styleStatus = 200, stor
       return route.fulfill({ contentType: 'text/javascript', body: '/* stub: zie leaflet.js */' });
     }
     if (/\.css$/.test(u)) return route.fulfill({ contentType: 'text/css', body: '' });
-    if (/openfreemap\.org\/styles\/dark/.test(u)) {
+    if (/openfreemap\.org\/styles\/liberty/.test(u)) {
       return route.fulfill({ status: styleStatus, contentType: 'application/json', headers: { 'access-control-allow-origin': '*' }, body: JSON.stringify(MOCK_STYLE) });
     }
     return route.abort(); // alles anders (tegels enz.) is hier niet bereikbaar
