@@ -84,7 +84,7 @@ const locations = [
         name: "Motherf*cking windmills",
         hint: "Ik wil naar deze locatie:",
         ans: "Vesterhav Syd Offshore Wind Farm",
-        media: "https://jessesfn.github.io/iSFN/media-vragen/MFWM.mp4",
+        media: "../media-vragen/MFWM.mp4",
         lat: 56.038474289396895,
         lng: 8.006029606252142,
         radius: 10 // ongeveer 10 km
@@ -102,7 +102,7 @@ const locations = [
         name: "Switch it up like nintendo",
         hint: "We gaan naar de bocht uit dit filmpje.",
         ans: "Een random bocht in Mexico",
-        media: "https://jessesfn.github.io/iSFN/media-vragen/weg.mp4",
+        media: "../media-vragen/weg.mp4",
         lat: 18.71237844228911,
         lng: -97.3293917373196,
         radius: 5 // ongeveer 5 km
@@ -129,7 +129,7 @@ const locations = [
         name: "Looks like Senegal radiance",
         hint: "Er zijn mensen die bij het spel GeoGuesser aan de kleur van een paaltje langs de weg kunnen zien in wel land ze zijn. Dat kunnen jullie vast ook. We gaan naar het land van dit paaltje:",
         ans: "Ghana",
-        media: "https://jessesfn.github.io/iSFN/media-vragen/Paal.png",
+        media: "../media-vragen/Paal.png",
         lat: 8.0300284,
         lng: -1.0800271,
         radius: 250 // ongeveer 250 km
@@ -138,7 +138,7 @@ const locations = [
         name: "Nonogram?",
         hint: "Los de puzzel op:",
         ans: "Airag Lake mongolië",
-        media: "https://jessesfn.github.io/iSFN/media-vragen/Nonogram.png",
+        media: "../media-vragen/Nonogram.png",
         lat: 48.900711445712965,
         lng: 93.45494595476013,
         radius: 50 // ongeveer 50 km
@@ -147,7 +147,7 @@ const locations = [
         name: "Hammond you blithering idiot",
         hint: "Ga naar deze tent:",
         ans: "Random plek in Mongolië",
-        media: "https://jessesfn.github.io/iSFN/media-vragen/tent.mp4",
+        media: "../media-vragen/tent.mp4",
         lat: 49.16377961838467,
         lng: 97.40827556282149,
         radius: 100 // ongeveer 100 km
@@ -264,7 +264,7 @@ const locations = [
         name: "Waar oh waar?",
         hint: "Waar staat dit?",
         ans: "Herwijnen",
-        media: "https://jessesfn.github.io/iSFN/media-vragen/vraag5-foto.png",
+        media: "../media-vragen/vraag5-foto.png",
         lat: 51.8369245,
         lng: 5.1380406,
         radius: 0.02 // ongeveer 20 meter
@@ -300,7 +300,7 @@ const locations = [
         name: "Koud",
         hint: "",
         ans: "Waar de Titanic gezonken is",
-        media: "https://jessesfn.github.io/iSFN/media-vragen/koud.wav",
+        media: "../media-vragen/koud.wav",
         lat: 41.8171385,
         lng: -49.9650879,
         radius: 500 // ongeveer 500 km
@@ -336,7 +336,7 @@ const locations = [
         name: "Klinkt als muziek voor mijn oren",
         hint: "",
         ans: "Sweet Home Alabama. Songsterr.com",
-        media: "https://jessesfn.github.io/iSFN/media-vragen/KAMVMO.png",
+        media: "../media-vragen/KAMVMO.png",
         lat: 32.9598909,
         lng: -86.7617503,
         radius: 300 // ongeveer 300 km
@@ -345,7 +345,7 @@ const locations = [
         name: "Gevoel",
         hint: "",
         ans: "India",
-        media: "https://jessesfn.github.io/iSFN/media-vragen/Gevoel.png",
+        media: "../media-vragen/Gevoel.png",
         lat: 23.2578301,
         lng: 78.4334586,
         radius: 1000 // ongeveer 1000 km
@@ -354,7 +354,7 @@ const locations = [
         name: "Insula Bonae Fortunae",
         hint: "",
         ans: "John Allen Cau - North Sentinel Island",
-        media: "https://jessesfn.github.io/iSFN/media-vragen/ibf.mp3",
+        media: "../media-vragen/ibf.mp3",
         lat: 11.56005259669176,
         lng: 92.23951743920667,
         radius: 5 // ongeveer 5 km
@@ -381,7 +381,7 @@ const locations = [
         name: "subeR",
         hint: "",
         ans: "Tankman - Tiananmenplein",
-        media: "https://jessesfn.github.io/iSFN/media-vragen/subeR.png",
+        media: "../media-vragen/subeR.png",
         lat: 39.906598873140496,
         lng: 116.39992900790104,
         radius: 0.3 // ongeveer 300 meter
@@ -399,7 +399,7 @@ const locations = [
         name: "1934",
         hint: "130 Kogels",
         ans: "Waar Bonnie en Clyde zijn kapot gemaakt.",
-        media: "https://jessesfn.github.io/iSFN/media-vragen/1934.png",
+        media: "../media-vragen/1934.JPG",
         lat: 32.44127353706743,
         lng: -93.09260128414329,
         radius: 0.03 // ongeveer 30 meter

@@ -7,7 +7,16 @@ export function startMotivatieTimer(intervalMs = 3600000) {
     '../Sounds/opschieten2.wav'
   ];
 
-  let lastScore = parseInt(localStorage.getItem('exploScore')) || 0;
+  // localStorage kan ontbreken (privémodus); dan telt de score als 0.
+  function readScore() {
+    try {
+      return parseInt(localStorage.getItem('exploScore'), 10) || 0;
+    } catch (e) {
+      return 0;
+    }
+  }
+
+  let lastScore = readScore();
 
   function playRandomAudio() {
     const randomSound = sounds[Math.floor(Math.random() * sounds.length)];
@@ -16,8 +25,8 @@ export function startMotivatieTimer(intervalMs = 3600000) {
     audio.play().catch(e => console.warn('Autoplay geblokkeerd:', e));
   }
 
-  async function checkScoreAndPlay() {
-    const currentScore = parseInt(localStorage.getItem('exploScore')) || 0;
+  function checkScoreAndPlay() {
+    const currentScore = readScore();
 
     if (currentScore <= lastScore) {
       // score is niet gestegen → speel willekeurig geluid
@@ -29,11 +38,10 @@ export function startMotivatieTimer(intervalMs = 3600000) {
     lastScore = currentScore;
   }
 
-  // elke uur checken
+  // Elk uur controleren. (Eerder liep hier óók een setTimeout met dezelfde
+  // controle na een uur; dat gaf op het eerste uur twee controles vlak na
+  // elkaar, met dubbel geluid als gevolg.)
   setInterval(checkScoreAndPlay, intervalMs);
-
-  // start eerste check na één uur
-  setTimeout(checkScoreAndPlay, intervalMs);
 }
 
 // automatisch starten bij import

@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <title>iSFN</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.13.0/dist/maplibre-gl.css" />
   <link rel="icon" href="/iSFN/Images/iSFN_favicon.png" type="image/png" />
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -23,13 +24,16 @@
     <ul></ul>
   </div>
 
-  <audio id="congratulations-sound" src="../sounds/win.mp3" preload="auto"></audio>
-  <img id="congratulations-image" src="../sounds/win.png" alt="win"
+  <audio id="congratulations-sound" src="../Sounds/win.mp3" preload="auto"></audio>
+  <img id="congratulations-image" src="../Images/win.png" alt="win"
     style="display:none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; object-fit: cover; z-index: 9999;">
 
-  
   <script type="module" src="timer.js"></script>
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/maplibre-gl@5.13.0/dist/maplibre-gl.js"></script>
+  <script src="https://unpkg.com/@maplibre/maplibre-gl-leaflet@0.1.3/leaflet-maplibre-gl.js"></script>
+  <script src="common.js"></script>
+  <script src="map.js"></script>
   <script src="locations.js"></script>
   <script src="script.js"></script>
 </body>

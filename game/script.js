@@ -1,16 +1,22 @@
 // ----------------- INIT MAP -----------------
-let currentLocation = null;
-const map = L.map('map').setView([20, 0], 2);
+const map = iSFNMap.createGameMap('map').setView([20, 0], 2);
 
-L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-  subdomains: 'abcd',
-  maxZoom: 19
-}).addTo(map);
+let currentLocation = null; // de geselecteerde vraag
+let currentItem = null;     // het bijbehorende element in de lijst
 
 const locationsList = document.getElementById('locations-list').getElementsByTagName('ul')[0];
-const correctLocations = JSON.parse(localStorage.getItem('correctLocations')) || [];
+const scoreEl = document.getElementById('score');
+
+// Alleen opgeslagen antwoorden van vragen die nog bestaan tellen mee; zo klopt
+// de score ook nadat er vragen zijn aangepast of verwijderd.
+const knownNames = new Set(locations.map(location => location.name));
+const correctLocations = iSFN.storage.getArray('correctLocations').filter(name => knownNames.has(name));
 let score = correctLocations.length;
-document.getElementById('score').innerText = "Score: " + score;
+
+function updateScore() {
+  scoreEl.textContent = "Score: " + score;
+}
+updateScore();
 
 // ----------------- LOCATIONS LIST -----------------
 
@@ -23,23 +29,31 @@ function shuffleArray(array) {
   return array;
 }
 
+// Markeert een lijstitem als goed beantwoord (vinkje komt vóór de hint).
+function markCorrect(li) {
+  li.classList.add('correct');
+  const check = document.createElement('span');
+  check.classList.add('checkmark');
+  check.textContent = ' ✔';
+  li.insertBefore(check, li.querySelector('.hint-text'));
+}
+
 // Shuffle the locations so the list order is random
 const shuffledLocations = shuffleArray([...locations]);
 
 shuffledLocations.forEach((location, index) => {
   const li = document.createElement('li');
   li.classList.add('location-item');
-  li.innerHTML = `${index + 1}. ${location.name}`;
-
-  if (correctLocations.includes(location.name)) {
-    li.classList.add('correct');
-    li.innerHTML += ' <span class="checkmark">✔</span>';
-  }
+  li.appendChild(document.createTextNode(`${index + 1}. ${location.name}`));
 
   const hint = document.createElement('div');
   hint.classList.add('hint-text');
   hint.innerText = location.hint;
   li.appendChild(hint);
+
+  if (correctLocations.includes(location.name)) {
+    markCorrect(li);
+  }
 
   li.addEventListener('click', () => {
     if (li.classList.contains('correct')) return;
@@ -51,6 +65,7 @@ shuffledLocations.forEach((location, index) => {
     li.classList.add('selected');
     hint.classList.add('show');
     currentLocation = location;
+    currentItem = li;
   });
 
   locationsList.appendChild(li);
@@ -61,23 +76,20 @@ shuffledLocations.forEach((location, index) => {
 map.on('click', e => {
   if (!currentLocation) return;
 
-  const distance = getDistanceFromLatLonInKm(
+  const distanceKm = iSFN.distanceMeters(
     currentLocation.lat,
     currentLocation.lng,
     e.latlng.lat,
     e.latlng.lng
-  );
+  ) / 1000;
 
-  if (distance <= currentLocation.radius) {
+  if (distanceKm <= currentLocation.radius) {
     alert("Goed! Binnen het gebied!");
-    const item = Array.from(document.querySelectorAll('.location-item'))
-      .find(el => el.innerText.includes(currentLocation.name));
-    item.classList.add('correct');
-    item.innerHTML += ' <span class="checkmark">✔</span>';
+    markCorrect(currentItem);
     correctLocations.push(currentLocation.name);
-    localStorage.setItem('correctLocations', JSON.stringify(correctLocations));
+    iSFN.storage.set('correctLocations', correctLocations);
     score = correctLocations.length;
-    document.getElementById('score').innerText = "Score: " + score;
+    updateScore();
     nextRound();
   } else {
     alert("Fout! Probeer het nog eens.");
@@ -85,27 +97,14 @@ map.on('click', e => {
 });
 
 // ----------------- HELPER FUNCTIONS -----------------
-function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
-  const R = 6371;
-  const dLat = deg2rad(lat2 - lat1);
-  const dLon = deg2rad(lon2 - lon1);
-  const a = Math.sin(dLat / 2) ** 2 +
-    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
-    Math.sin(dLon / 2) ** 2;
-  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-}
-
-function deg2rad(deg) {
-  return deg * (Math.PI / 180);
-}
-
 function nextRound() {
   currentLocation = null;
+  currentItem = null;
   map.setView([20, 0], 2);
-  if (score === locations.length) {
+  if (score >= locations.length) {
     const sound = document.getElementById('congratulations-sound');
     const image = document.getElementById('congratulations-image');
-    if (sound) sound.play();
+    if (sound) sound.play().catch(err => console.warn('[iSFN] Geluid kon niet worden afgespeeld:', err));
     if (image) {
       image.style.display = 'block';
       setTimeout(() => image.style.display = 'none', 5000);
@@ -115,15 +114,18 @@ function nextRound() {
 
 // ----------------- RESET -----------------
 document.getElementById('reset-button').addEventListener('click', () => {
-  localStorage.removeItem('correctLocations');
+  iSFN.storage.remove('correctLocations');
   correctLocations.length = 0;
   score = 0;
-  document.getElementById('score').innerText = "Score: 0";
+  updateScore();
+  currentLocation = null;
+  currentItem = null;
   document.querySelectorAll('.location-item').forEach(item => {
     item.classList.remove('correct', 'selected');
     const check = item.querySelector('.checkmark');
     if (check) check.remove();
   });
+  document.querySelectorAll('.hint-text').forEach(h => h.classList.remove('show'));
   map.setView([20, 0], 2);
 });
 

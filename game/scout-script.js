@@ -4,24 +4,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const LOCS = (typeof locations !== 'undefined' && Array.isArray(locations)) ? locations : [];
 
   // ✅ Herstel score uit localStorage
-  let score = parseInt(localStorage.getItem('exploScore')) || 0;
+  let score = iSFN.storage.getInt('exploScore', 0);
   let currentIndex = -1;
-  let usedIndexes = new Set();
+  const usedIndexes = new Set();
 
-  // ✅ Maak de Leaflet-kaart aan
-  const map = L.map('map', {
+  // ✅ Maak de Leaflet-kaart aan (gedeelde OpenStreetMap-kaart, zie map.js)
+  const map = iSFNMap.createGameMap('map', {
     worldCopyJump: true,
     zoomControl: true
   }).setView([20, 0], 2);
 
-  // ✅ Voeg een dark mode tile layer toe
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-    subdomains: 'abcd',
-    maxZoom: 19
-  }).addTo(map);
-
   let guessMarker = null;
   let selectedCoords = null;
+  let answered = false; // voorkomt dubbel scoren tijdens de pauze na een goed antwoord
 
   // ✅ UI-referenties
   const placeNameEl = document.getElementById('place-name');
@@ -32,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function updateScore() {
     scoreEl.textContent = `Score: ${score}`;
-    localStorage.setItem('exploScore', score);
+    iSFN.storage.set('exploScore', score);
   }
 
   function showFeedbackCenter(text, good) {
@@ -42,71 +37,39 @@ document.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => feedbackCenter.style.display = 'none', 1000);
   }
 
-function pickRandomIndex() {
-  if (LOCS.length === 0) return -1;
+  function pickRandomIndex() {
+    if (LOCS.length === 0) return -1;
 
-  // ✅ Als alle vragen gedaan zijn → pop-up tonen
-  if (usedIndexes.size >= LOCS.length) {
-    alert("Yo, je hebt alles gedaan, doei!");
-    usedIndexes.clear(); // eventueel opnieuw beginnen na de melding
+    // ✅ Als alle vragen gedaan zijn → melding tonen en opnieuw beginnen
+    if (usedIndexes.size >= LOCS.length) {
+      alert("Yo, je hebt alles gedaan, doei!");
+      usedIndexes.clear();
+    }
+
+    let idx;
+    do { idx = Math.floor(Math.random() * LOCS.length); }
+    while (usedIndexes.has(idx));
+    usedIndexes.add(idx);
+    return idx;
   }
-
-  let idx;
-  do { idx = Math.floor(Math.random() * LOCS.length); }
-  while (usedIndexes.has(idx));
-  usedIndexes.add(idx);
-  return idx;
-}
-
 
   function loadQuestion(idx) {
     if (idx < 0 || idx >= LOCS.length) return;
     currentIndex = idx;
+    answered = false;
     const item = LOCS[idx];
 
     placeNameEl.textContent = item.name || '--';
     hintEl.textContent = item.hint || '';
-    mediaArea.innerHTML = '';
+    mediaArea.replaceChildren();
 
     if (item.media) {
-      const mediaURL = item.media;
-      const ext = mediaURL.split('.').pop().toLowerCase();
-
-      if (['mp4', 'webm', 'ogg'].includes(ext)) {
-        const v = document.createElement('video');
-        v.src = mediaURL;
-        v.controls = true;
-        v.setAttribute('playsinline', '');
-        mediaArea.appendChild(v);
-      } else if (['mp3', 'wav', 'ogg'].includes(ext)) {
-        const a = document.createElement('audio');
-        a.src = mediaURL;
-        a.controls = true;
-        mediaArea.appendChild(a);
-      } else {
-        const img = document.createElement('img');
-        img.src = mediaURL;
-        img.alt = item.name;
-        mediaArea.appendChild(img);
-      }
+      mediaArea.appendChild(iSFN.createMediaElement(item.media, item.name));
     }
 
     map.setView([20, 0], 2);
     if (guessMarker) { map.removeLayer(guessMarker); guessMarker = null; }
     selectedCoords = null;
-  }
-
-  function deg2rad(deg) { return deg * Math.PI / 180; }
-
-  function haversine(lat1, lon1, lat2, lon2) {
-    const R = 6371000;
-    const dLat = deg2rad(lat2 - lat1);
-    const dLon = deg2rad(lon2 - lon1);
-    const a = Math.sin(dLat / 2) ** 2 +
-              Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
-              Math.sin(dLon / 2) ** 2;
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    return R * c;
   }
 
   map.on('click', e => {
@@ -116,31 +79,29 @@ function pickRandomIndex() {
   });
 
   document.getElementById('confirmBtn').addEventListener('click', () => {
-    if (!selectedCoords || currentIndex === -1) return;
+    if (!selectedCoords || currentIndex === -1 || answered) return;
 
     const { lat, lng } = selectedCoords;
     const item = LOCS[currentIndex];
-    const dist = Math.round(haversine(lat, lng, item.lat, item.lng));
+    const dist = Math.round(iSFN.distanceMeters(lat, lng, item.lat, item.lng));
     const radius = (item.radius ? item.radius * 1000 : 20000);
 
-    const correctSound = new Audio('../Sounds/Correct.mp3');
-    const wrongSound = new Audio('../Sounds/Incorrect.mp3');
-
     if (dist <= radius) {
+      answered = true;
       score++;
       updateScore();
       showFeedbackCenter('GOED', true);
-      correctSound.play();
+      iSFN.playSound('../Sounds/Correct.mp3');
       setTimeout(() => loadQuestion(pickRandomIndex()), 1000);
     } else {
       showFeedbackCenter('FOUT', false);
-      wrongSound.play();
+      iSFN.playSound('../Sounds/Incorrect.mp3');
     }
   });
 
   document.getElementById('resetBtn').addEventListener('click', () => {
     score = 0;
-    localStorage.removeItem('exploScore');
+    iSFN.storage.remove('exploScore');
     updateScore();
     usedIndexes.clear();
     loadQuestion(pickRandomIndex());

@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>iSFN - Explorers</title>
   <link rel="icon" href="/iSFN/Images/iSFN_favicon.png" type="image/png" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.13.0/dist/maplibre-gl.css" />
   <link rel="stylesheet" href="explo-style.css" />
 </head>
 <body>
@@ -20,14 +21,16 @@
       <div class="place-name" id="place-name">--</div>
       <div class="hint" id="hint">Cheat Schema om te kijken waar wat is.</div>
       <div class="media" id="media-area"></div>
-      </div>
     </div>
   </div>
 
   <div class="feedback-center" id="feedbackCenter"></div>
 
-  
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/maplibre-gl@5.13.0/dist/maplibre-gl.js"></script>
+  <script src="https://unpkg.com/@maplibre/maplibre-gl-leaflet@0.1.3/leaflet-maplibre-gl.js"></script>
+  <script src="common.js"></script>
+  <script src="map.js"></script>
   <script src="locations.js"></script>
   <script src="cheat-loc.js"></script>
   <script type="module" src="timer.js"></script>

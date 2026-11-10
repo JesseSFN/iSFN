@@ -3,27 +3,26 @@ document.addEventListener("DOMContentLoaded", () => {
   // ✅ Laad locaties
   const LOCS = (typeof locations !== 'undefined' && Array.isArray(locations)) ? locations : [];
 
-  // ✅ Herstel score, huidige vraag, en gebruikte vragen uit localStorage
-  let score = parseInt(localStorage.getItem('exploScore')) || 0;
-  let currentIndex = parseInt(localStorage.getItem('currentIndex'));
-  if (isNaN(currentIndex)) currentIndex = -1;
+  // ✅ Herstel score, huidige vraag, en gebruikte vragen uit localStorage.
+  // Alleen geldige vraagnummers tellen mee, zodat een aangepaste vragenlijst
+  // het spel niet laat vastlopen op een oude opgeslagen waarde.
+  const isValidIndex = i => Number.isInteger(i) && i >= 0 && i < LOCS.length;
 
-  let usedIndexes = new Set(JSON.parse(localStorage.getItem('usedIndexes') || '[]'));
+  let score = iSFN.storage.getInt('exploScore', 0);
+  let currentIndex = iSFN.storage.getInt('currentIndex', -1);
+  if (!isValidIndex(currentIndex)) currentIndex = -1;
 
-  // ✅ Maak de Leaflet-kaart aan
-  const map = L.map('map', {
+  const usedIndexes = new Set(iSFN.storage.getArray('usedIndexes').filter(isValidIndex));
+
+  // ✅ Maak de Leaflet-kaart aan (gedeelde OpenStreetMap-kaart, zie map.js)
+  const map = iSFNMap.createGameMap('map', {
     worldCopyJump: true,
     zoomControl: true
   }).setView([20, 0], 2);
 
-  // ✅ Voeg een dark mode tile layer toe
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-    subdomains: 'abcd',
-    maxZoom: 19
-  }).addTo(map);
-
   let guessMarker = null;
   let selectedCoords = null;
+  let answered = false; // voorkomt dubbel scoren tijdens de pauze na een goed antwoord
 
   // ✅ UI-referenties
   const placeNameEl = document.getElementById('place-name');
@@ -52,12 +51,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function updateScore() {
     scoreEl.textContent = `Score: ${score}`;
-    localStorage.setItem('exploScore', score);
+    iSFN.storage.set('exploScore', score);
   }
 
   function saveProgress() {
-    localStorage.setItem('usedIndexes', JSON.stringify(Array.from(usedIndexes)));
-    localStorage.setItem('currentIndex', currentIndex);
+    iSFN.storage.set('usedIndexes', Array.from(usedIndexes));
+    iSFN.storage.set('currentIndex', currentIndex);
   }
 
   function showFeedbackCenter(text, good) {
@@ -81,9 +80,9 @@ document.addEventListener("DOMContentLoaded", () => {
     updateScore();
     usedIndexes.clear();
     currentIndex = -1;
-    localStorage.removeItem('exploScore');
-    localStorage.removeItem('usedIndexes');
-    localStorage.removeItem('currentIndex');
+    iSFN.storage.remove('exploScore');
+    iSFN.storage.remove('usedIndexes');
+    iSFN.storage.remove('currentIndex');
     hideEndPopup();
     loadQuestion(pickRandomIndex());
   }
@@ -109,55 +108,24 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function loadQuestion(idx) {
-    if (idx < 0 || idx >= LOCS.length) return;
+    if (!isValidIndex(idx)) return;
     currentIndex = idx;
+    answered = false;
     saveProgress();
 
     const item = LOCS[idx];
 
     placeNameEl.textContent = item.name || '--';
     hintEl.textContent = item.hint || '';
-    mediaArea.innerHTML = '';
+    mediaArea.replaceChildren();
 
     if (item.media) {
-      const mediaURL = item.media;
-      const ext = mediaURL.split('.').pop().toLowerCase();
-
-      if (['mp4', 'webm', 'ogg'].includes(ext)) {
-        const v = document.createElement('video');
-        v.src = mediaURL;
-        v.controls = true;
-        v.setAttribute('playsinline', '');
-        mediaArea.appendChild(v);
-      } else if (['mp3', 'wav', 'ogg'].includes(ext)) {
-        const a = document.createElement('audio');
-        a.src = mediaURL;
-        a.controls = true;
-        mediaArea.appendChild(a);
-      } else {
-        const img = document.createElement('img');
-        img.src = mediaURL;
-        img.alt = item.name;
-        mediaArea.appendChild(img);
-      }
+      mediaArea.appendChild(iSFN.createMediaElement(item.media, item.name));
     }
 
     map.setView([20, 0], 2);
     if (guessMarker) { map.removeLayer(guessMarker); guessMarker = null; }
     selectedCoords = null;
-  }
-
-  function deg2rad(deg) { return deg * Math.PI / 180; }
-
-  function haversine(lat1, lon1, lat2, lon2) {
-    const R = 6371000;
-    const dLat = deg2rad(lat2 - lat1);
-    const dLon = deg2rad(lon2 - lon1);
-    const a = Math.sin(dLat / 2) ** 2 +
-              Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
-              Math.sin(dLon / 2) ** 2;
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    return R * c;
   }
 
   map.on('click', e => {
@@ -167,21 +135,19 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   document.getElementById('confirmBtn').addEventListener('click', () => {
-    if (!selectedCoords || currentIndex === -1) return;
+    if (!selectedCoords || currentIndex === -1 || answered) return;
 
     const { lat, lng } = selectedCoords;
     const item = LOCS[currentIndex];
-    const dist = Math.round(haversine(lat, lng, item.lat, item.lng));
+    const dist = Math.round(iSFN.distanceMeters(lat, lng, item.lat, item.lng));
     const radius = (item.radius ? item.radius * 1000 : 20000);
 
-    const correctSound = new Audio('../Sounds/Correct.mp3');
-    const wrongSound = new Audio('../Sounds/Incorrect.mp3');
-
     if (dist <= radius) {
+      answered = true;
       score++;
       updateScore();
       showFeedbackCenter('GOED', true);
-      correctSound.play();
+      iSFN.playSound('../Sounds/Correct.mp3');
 
       setTimeout(() => {
         const newIdx = pickRandomIndex();
@@ -189,25 +155,23 @@ document.addEventListener("DOMContentLoaded", () => {
       }, 1000);
     } else {
       showFeedbackCenter('FOUT', false);
-      wrongSound.play();
+      iSFN.playSound('../Sounds/Incorrect.mp3');
     }
   });
 
   document.getElementById('resetBtn').addEventListener('click', resetAll);
 
-// ✅ Start
-updateScore();
+  // ✅ Start
+  updateScore();
 
-if (LOCS.length > 0) {
-  // 🔹 Controle: als alle vragen al beantwoord zijn, toon meteen het eindscherm
-  if (score >= LOCS.length) {
-    showEndPopup();
-  } else {
-    if (currentIndex !== -1) {
+  if (LOCS.length > 0) {
+    // 🔹 Controle: als alle vragen al beantwoord zijn, toon meteen het eindscherm
+    if (score >= LOCS.length) {
+      showEndPopup();
+    } else if (currentIndex !== -1) {
       loadQuestion(currentIndex);
     } else {
       loadQuestion(pickRandomIndex());
     }
   }
-}
 });
