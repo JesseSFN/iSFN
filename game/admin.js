@@ -103,7 +103,33 @@
   var DRAFT_KEY = 'isfnAdminDraft';
   var DEFAULT_RADIUS_KM = 20; // zelfde standaard als het spel zelf gebruikt
 
+  // Draait de pagina achter de Docker-server (server/server.js)? Dan kun je ingelogd
+  // direct publiceren en media uploaden. Op GitHub Pages bestaat /api/session niet en
+  // werkt de pagina zoals voorheen met een download.
+  function detectServer() {
+    return new Promise(function (resolve) {
+      var timer = setTimeout(function () { resolve(null); }, 2500);
+      fetch('/api/session', { credentials: 'same-origin' })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (info) {
+          clearTimeout(timer);
+          if (info && info.server === true) {
+            if (!info.authed) { location.replace('/admin/login'); return; }
+            resolve(info);
+          } else {
+            resolve(null);
+          }
+        })
+        .catch(function () { clearTimeout(timer); resolve(null); });
+    });
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
+    detectServer().then(start);
+  });
+
+  function start(serverInfo) {
+    var serverMode = Boolean(serverInfo);
     var published = (typeof locations !== 'undefined' && Array.isArray(locations)) ? locations : [];
     var publishedJson = JSON.stringify(published);
 
@@ -113,7 +139,8 @@
       form: $('form'), name: $('f-name'), hint: $('f-hint'), ans: $('f-ans'), media: $('f-media'),
       lat: $('f-lat'), lng: $('f-lng'), radius: $('f-radius'), preview: $('media-preview'),
       errors: $('errors'), save: $('save'), cancel: $('cancel'), del: $('delete'),
-      dirty: $('dirty'), notice: $('notice')
+      dirty: $('dirty'), notice: $('notice'), publish: $('publish'), logout: $('logout'),
+      mediaTools: $('media-tools'), mediaPick: $('media-pick'), mediaFile: $('media-file')
     };
 
     var items = clone(published);
@@ -210,13 +237,23 @@
     }
 
     // ---- media-voorbeeld
+    var previewPath = null;
     function updateMediaPreview() {
-      el.preview.replaceChildren();
       var path = el.media.value.trim();
+      if (path === previewPath) return; // niets veranderd: voorkomt flikkeren
+      previewPath = path;
+      el.preview.replaceChildren();
       if (!path || /^\s*(javascript|data):/i.test(path)) return;
       el.preview.appendChild(iSFN.createMediaElement(path, el.name.value || 'media'));
     }
-    el.media.addEventListener('change', updateMediaPreview);
+    // Pas bijwerken na even niet typen. Niet bij het verlaten van het veld: dan verandert de
+    // hoogte van het voorbeeld precies tussen indrukken en loslaten van de muis, waardoor de
+    // knop onder de cursor wegschuift en de klik op "Opslaan" verloren gaat.
+    var previewTimer = null;
+    el.media.addEventListener('input', function () {
+      clearTimeout(previewTimer);
+      previewTimer = setTimeout(updateMediaPreview, 300);
+    });
 
     // ---- formulier
     function showErrors(messages) {
@@ -359,7 +396,9 @@
       a.href = url; a.download = 'locations.js';
       document.body.appendChild(a); a.click(); a.remove();
       setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
-      showNotice('locations.js is gedownload. Vervang game/locations.js in de repository door dit bestand en commit het.', 'ok');
+      showNotice(serverMode
+        ? 'locations.js is gedownload (als back-up). Spelers zien alleen wat je met Publiceren hebt opgeslagen.'
+        : 'locations.js is gedownload. Vervang game/locations.js in de repository door dit bestand en commit het.', 'ok');
     });
 
     $('copy').addEventListener('click', function () {
@@ -383,7 +422,140 @@
       showNotice('Concept weggegooid; de gepubliceerde vragen zijn teruggezet.', 'ok');
     });
 
+    // ---- servermodus: publiceren, media uploaden, uitloggen
+    var mediaMaxBytes = 0;
+
+    function api(method, url, json, raw) {
+      var headers = { 'X-Admin': '1' };
+      var options = { method: method, headers: headers, credentials: 'same-origin' };
+      if (raw) { headers['Content-Type'] = 'application/octet-stream'; options.body = raw; }
+      else if (json !== undefined) { headers['Content-Type'] = 'application/json'; options.body = JSON.stringify(json); }
+      return fetch(url, options).then(function (r) {
+        return r.json().catch(function () { return {}; }).then(function (data) {
+          if (r.status === 401) sessionExpired();
+          if (!r.ok) {
+            var err = new Error(data.error || 'Er ging iets mis (HTTP ' + r.status + ').');
+            err.status = r.status;
+            err.details = data.details || [];
+            throw err;
+          }
+          return data;
+        });
+      });
+    }
+
+    function sessionExpired() {
+      showNotice('Je sessie is verlopen. Log opnieuw in; je concept blijft bewaard.', null, [
+        { label: 'Inloggen', run: function () { location.href = '/admin/login'; } }
+      ]);
+    }
+
+    function publish() {
+      if (JSON.stringify(items) === publishedJson) {
+        showNotice('Er zijn geen wijzigingen om te publiceren.', 'ok');
+        return;
+      }
+      el.publish.disabled = true;
+      api('PUT', '/api/questions', { questions: items, base: publishedJson })
+        .then(function (result) {
+          published = clone(items);
+          publishedJson = JSON.stringify(published);
+          clearDraft();
+          commit();
+          showErrors([]);
+          showNotice('Gepubliceerd (' + result.count + ' vragen). Spelers zien de wijziging zodra ze de pagina verversen.', 'ok');
+        })
+        .catch(function (err) {
+          if (err.status === 401) return;
+          if (err.status === 409) {
+            showNotice(err.message, null, [{ label: 'Pagina herladen', run: function () { location.reload(); } }]);
+            return;
+          }
+          var details = err.details && err.details.length ? err.details : [err.message];
+          showErrors(details);
+          showNotice('Niet gepubliceerd: ' + details[0]);
+        })
+        .then(function () { el.publish.disabled = false; });
+    }
+
+    // Bestandsnaam die de server accepteert: letters, cijfers, punt, streepje en underscore.
+    function safeFileName(name) {
+      var cleaned = name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^A-Za-z0-9._-]+/g, '-');
+      return cleaned.slice(-100).replace(/^[^A-Za-z0-9]+/, '');
+    }
+
+    function refreshMediaList() {
+      return api('GET', '/api/media').then(function (data) {
+        mediaMaxBytes = data.maxBytes || 0;
+        el.mediaPick.replaceChildren();
+        var first = document.createElement('option');
+        first.value = ''; first.textContent = '— bestaand bestand kiezen —';
+        el.mediaPick.appendChild(first);
+        data.files.forEach(function (f) {
+          var option = document.createElement('option');
+          option.value = '../media-vragen/' + f.name;
+          option.textContent = f.name + ' (' + Math.max(1, Math.round(f.size / 1024)) + ' kB)';
+          el.mediaPick.appendChild(option);
+        });
+      }).catch(function () { /* de lijst is een gemak; uploaden en typen blijven werken */ });
+    }
+
+    function useMedia(path) {
+      el.media.value = path;
+      updateMediaPreview();
+    }
+
+    function uploadFile(file, overwrite) {
+      var name = safeFileName(file.name);
+      return api('POST', '/api/media?name=' + encodeURIComponent(name) + (overwrite ? '&overwrite=1' : ''), undefined, file);
+    }
+
+    function startUpload() {
+      var file = el.mediaFile.files[0];
+      if (!file) return;
+      if (mediaMaxBytes && file.size > mediaMaxBytes) {
+        showNotice('Dit bestand is te groot (maximaal ' + Math.round(mediaMaxBytes / 1048576) + ' MB).');
+        el.mediaFile.value = '';
+        return;
+      }
+      uploadFile(file, false)
+        .catch(function (err) {
+          if (err.status === 409 && window.confirm(err.message + '\n\nOverschrijven?')) return uploadFile(file, true);
+          throw err;
+        })
+        .then(function (saved) {
+          useMedia(saved.path);
+          showNotice('Geüpload: ' + saved.name + '. Vergeet niet te publiceren.', 'ok');
+          return refreshMediaList();
+        })
+        .catch(function (err) { if (err.status !== 401) showNotice('Uploaden mislukt: ' + err.message); })
+        .then(function () { el.mediaFile.value = ''; });
+    }
+
+    if (serverMode) {
+      el.publish.hidden = false;
+      el.logout.hidden = false;
+      el.mediaTools.hidden = false;
+      $('server-help').hidden = false;
+      $('static-help').hidden = true;
+      $('download').classList.remove('primary');
+      $('download').textContent = 'Download back-up';
+      $('copy').hidden = true;
+
+      el.publish.addEventListener('click', publish);
+      el.mediaFile.addEventListener('change', startUpload);
+      el.mediaPick.addEventListener('change', function () {
+        if (el.mediaPick.value) useMedia(el.mediaPick.value);
+        el.mediaPick.selectedIndex = 0;
+      });
+      el.logout.addEventListener('click', function () {
+        var done = function () { location.href = '/admin/login'; };
+        api('POST', '/api/logout').then(done, done);
+      });
+      refreshMediaList();
+    }
+
     commit();
     startNew();
-  });
+  }
 })();

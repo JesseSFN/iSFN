@@ -96,7 +96,7 @@ button.primary { background: var(--accent); }
 button.primary:hover { background: var(--accent-hover); filter: none; }
 button.danger { background: var(--danger); }
 
-input, textarea {
+input, textarea, select {
   width: 100%;
   background: var(--field-bg);
   color: var(--text);
@@ -106,7 +106,7 @@ input, textarea {
   font: inherit;
   margin-top: 4px;
 }
-input:focus, textarea:focus { outline: 2px solid var(--accent); border-color: transparent; }
+input:focus, textarea:focus, select:focus { outline: 2px solid var(--accent); border-color: transparent; }
 textarea { resize: vertical; }
 
 label { display: block; margin-bottom: 10px; font-weight: 600; }
@@ -162,3 +162,8 @@ code { background: var(--field-bg); padding: 1px 5px; border-radius: 4px; }
   .map-col { height: 50vh; }
   .list-col { max-height: 40vh; }
 }
+
+.media-tools { display: grid; gap: 8px; margin-bottom: 10px; }
+.media-tools select { margin-top: 0; }
+.media-tools .upload { margin: 0; font-weight: 400; font-size: 13px; color: var(--muted); }
+.media-tools input[type="file"] { padding: 6px; }

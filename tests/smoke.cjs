@@ -49,7 +49,8 @@ async function open(browser, base, url, { glMode = 'ok', styleStatus = 200, stor
 
   page.on('pageerror', e => problems.pageErrors.push(String(e)));
   page.on('console', m => { if (m.type() === 'error') problems.consoleErrors.push(m.text()); });
-  page.on('response', r => { if (r.url().startsWith(base) && r.status() >= 400) problems.failedLocal.push(r.status() + ' ' + r.url()); });
+  // /api/session is de test of er een server is; op een statische host (GitHub Pages) is een 404 daar de bedoeling.
+  page.on('response', r => { if (r.url().startsWith(base) && r.status() >= 400 && !r.url().endsWith('/api/session')) problems.failedLocal.push(r.status() + ' ' + r.url()); });
   page.on('dialog', d => { problems.lastDialog = d.message(); d.accept(); });
 
   await page.route(/^https?:\/\/(?!127\.0\.0\.1)/, route => {

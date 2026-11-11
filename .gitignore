@@ -1,0 +1,4 @@
+# Wachtwoord en gegevens van je eigen server horen niet in git
+.env
+data/
+node_modules/

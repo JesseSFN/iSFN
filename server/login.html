@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex" />
+  <title>iSFN - Inloggen</title>
+  <link rel="icon" href="/Images/iSFN_favicon.png" type="image/png" />
+  <style>
+    :root { --bg: #121212; --panel: #1e1e1e; --field: #2a2a2a; --text: #fff; --muted: #bbb; --accent: #0b74de; --danger: #ff6b6b; }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, var(--bg), var(--panel)); color: var(--text);
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial; }
+    main { width: min(380px, 92vw); background: var(--panel); border-radius: 14px; padding: 28px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5); text-align: center; }
+    img { height: 48px; margin-bottom: 8px; }
+    h1 { font-size: 20px; margin: 0 0 18px; }
+    label { display: block; text-align: left; font-weight: 600; }
+    input { width: 100%; margin-top: 6px; padding: 10px 12px; border-radius: 8px; border: 1px solid #3a3a3a;
+      background: var(--field); color: var(--text); font: inherit; }
+    input:focus { outline: 2px solid var(--accent); border-color: transparent; }
+    button { width: 100%; margin-top: 16px; padding: 10px; border: 0; border-radius: 8px; background: var(--accent);
+      color: #fff; font: inherit; font-weight: 600; cursor: pointer; }
+    button:disabled { opacity: 0.6; cursor: wait; }
+    #error { color: var(--danger); min-height: 1.4em; margin: 12px 0 0; }
+    .muted { color: var(--muted); font-size: 13px; }
+  </style>
+</head>
+<body>
+  <main>
+    <img src="/Images/iSFN_Logo_V5_White.svg" alt="iSFN Logo" />
+    <h1>Vragenbeheer</h1>
+    <form id="form">
+      <label>Wachtwoord
+        <input id="password" type="password" autocomplete="current-password" autofocus required />
+      </label>
+      <button id="submit" type="submit">Inloggen</button>
+      <p id="error" role="alert"></p>
+    </form>
+    <p class="muted"><a href="/" style="color:inherit">Terug naar het spel</a></p>
+  </main>
+  <script>
+    var form = document.getElementById('form');
+    var error = document.getElementById('error');
+    var submit = document.getElementById('submit');
+
+    fetch('/api/session').then(function (r) { return r.json(); }).then(function (s) {
+      if (s.authed) location.replace('/game/admin.html');
+      else if (!s.enabled) error.textContent = 'Beheer staat uit: stel ADMIN_PASSWORD in (minimaal 8 tekens) en start de server opnieuw.';
+    }).catch(function () { /* de server geeft hieronder zelf een melding */ });
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      error.textContent = '';
+      submit.disabled = true;
+      fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-Admin': '1' },
+        body: JSON.stringify({ password: document.getElementById('password').value })
+      }).then(function (r) {
+        return r.json().then(function (body) { return { ok: r.ok, body: body }; });
+      }).then(function (result) {
+        if (result.ok) { location.replace('/game/admin.html'); return; }
+        error.textContent = result.body.error || 'Inloggen is niet gelukt.';
+        document.getElementById('password').select();
+      }).catch(function () {
+        error.textContent = 'De server is niet bereikbaar.';
+      }).then(function () { submit.disabled = false; });
+    });
+  </script>
+</body>
+</html>
